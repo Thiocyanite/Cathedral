@@ -27,6 +27,9 @@ public:
     Menager();
     ~Menager();
     void mainloop();
+    void stopMusic(){audi->stopaudio();};
+    void playEpica(){audi->playEpica();};
+    void playAfter(){audi->playAfter();};
 };
 
 
