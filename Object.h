@@ -4,7 +4,7 @@
 
 #ifndef OPENGLSETUP_OBJECT_H
 #define OPENGLSETUP_OBJECT_H
-#include "Mesh.hpp"
+#include "Mesh.h"
 #include <iostream>
 
 class Object{
