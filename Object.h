@@ -16,7 +16,6 @@ public:
 
 class ObjectCreator{
 private:
-private:
     std::vector<std::shared_ptr<Mesh>> meshes;
     bool isMesh = false;
 public:

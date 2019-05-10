@@ -18,11 +18,13 @@
 
 #include <SDL2_mixer/SDL_mixer.h>
 #include "Audio.h"
+#include "ObjectMenager.h"
 
 class Menager {
 private:
 Audio *audi; //Audio system
     GLFWwindow* window; //Main window
+    ObjectMenager stableObjects;
 public:
     Menager();
     ~Menager();
@@ -30,6 +32,7 @@ public:
     void stopMusic(){audi->stopaudio();};
     void playEpica(){audi->playEpica();};
     void playAfter(){audi->playAfter();};
+    void loadObjects(std::string &fileWithPaths);
 };
 
 
