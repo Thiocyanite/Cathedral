@@ -3,6 +3,48 @@
 //
 
 #include "Menager.h"
+#include <fstream>
+#include <memory>
+#include <stdlib.h>
+#include <glm/glm.hpp>
+
+
+void Menager::loadObjects(std::string &fileWithPaths, std::string &fileWithParameters) {
+    std::fstream objects, parameters;
+    objects.open(fileWithPaths.c_str(), std::ios::in);
+    parameters.open(fileWithParameters.c_str(), std::ios::in);
+    if (objects.fail() || parameters.fail() )
+    {
+        std::cerr<<"Couldn't open one of the important files 😫\n";
+        exit(0);
+    }
+    std::shared_ptr<Object> loadingOne;
+    glm::vec3 loadingParamether;
+    std::string pathToObject, par[3];
+    while (!objects.eof()){
+        objects>>pathToObject;
+        try{
+            loadingOne=objLoad.loadObject(pathToObject.c_str()); //if the object is loaded, it's ok
+            stableObjects.addObject(loadingOne);
+            for (int i=0;i<3;i++){
+                 parameters>>par[i];}
+            positions.push_back(glm::vec3(atof(par[0].c_str()),atof(par[1].c_str()),atof(par[3].c_str())));
+            for (int i=0;i<3;i++){
+                parameters>>par[i];}
+            rotations.push_back(glm::vec3(atof(par[0].c_str()),atof(par[1].c_str()),atof(par[3].c_str())));
+            for (int i=0;i<3;i++){
+                parameters>>par[i];}
+            scales.push_back(glm::vec3(atof(par[0].c_str()),atof(par[1].c_str()),atof(par[3].c_str())));
+        }
+        catch (...){
+            for (int i=0;i<9;i++){
+                parameters>>par[0];} //we have to leave the paramethers if we don't have object
+        }
+    }
+
+
+
+}
 
 
 void Menager::mainloop() {

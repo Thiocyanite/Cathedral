@@ -28,7 +28,8 @@ public:
     std::shared_ptr<Object> make(){
         std::shared_ptr<Object> returnObject=std::make_shared<Object>();
         if (!isMesh)
-        {std::cerr<<"There is no mesh to create a model 😤\n "; } //later there will be something thrown
+        {std::cerr<<"There is no mesh to create a model 😤\n ";
+        throw false;}
         returnObject->meshes=meshes;
         isMesh=false;
         return returnObject;

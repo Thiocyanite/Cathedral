@@ -19,12 +19,18 @@
 #include <SDL2_mixer/SDL_mixer.h>
 #include "Audio.h"
 #include "ObjectMenager.h"
+#include "ObjectLoader.h"
+
 
 class Menager {
 private:
 Audio *audi; //Audio system
     GLFWwindow* window; //Main window
+    ObjectLoader objLoad;
     ObjectMenager stableObjects;
+    std::vector<glm::vec3> positions;
+    std::vector<glm::vec3> rotations;
+    std::vector<glm::vec3> scales;
 public:
     Menager();
     ~Menager();
@@ -32,7 +38,7 @@ public:
     void stopMusic(){audi->stopaudio();};
     void playEpica(){audi->playEpica();};
     void playAfter(){audi->playAfter();};
-    void loadObjects(std::string &fileWithPaths);
+    void loadObjects(std::string &fileWithPaths, std::string &fileWithParameters);
 };
 
 

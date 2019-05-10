@@ -8,7 +8,7 @@
 #include <map>
 #include <vector>
 #include "Object.h"
-
+#include <glm/glm.hpp>
 class ObjectMenager {
 private:
     std::vector<std::shared_ptr<Object>> allObjects;
