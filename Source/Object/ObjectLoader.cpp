@@ -1,35 +1,10 @@
 //
-// Created by Julia on 2019-05-07.
+// Created by dominik on 11.05.19.
 //
-
-#ifndef OPENGLSETUP_OBJECTLOADER_H
-#define OPENGLSETUP_OBJECTLOADER_H
-
-#include <memory>
-#include <assimp/Importer.hpp>
-#include <assimp/scene.h>
-#include <assimp/cimport.h>
-#include <assimp/postprocess.h>
-
-#include "Mesh.h"
-#include "MeshLoader.h"
-#include "Object.h"
 #include "ObjectLoader.h"
 
-class ObjectLoader {
-public:
-    std::shared_ptr<Object> loadObject(const std::string &path);
-private:
-    inline  static aiScene scene;
-    inline static MeshLoader meshload;
-    inline static Assimp::Importer import;
-    inline static std::string directory;
-
-    static void loadMeshes(const std::shared_ptr<Object> &thisObject);
-};
-
 std::shared_ptr<Object> ObjectLoader::loadObject( const std::string &path ) {
-    std::shared_ptr<Object> thisObject = std::make_shared<Object>();
+    ObjectCreator objectCreator;
 
     directory = getFileDir(path);
 
@@ -54,16 +29,15 @@ std::shared_ptr<Object> ObjectLoader::loadObject( const std::string &path ) {
     if (!scene) {
         std::cerr<<"No object 😤\n";
     }
-    loadMeshes(thisObject);
-    return thisObject;
+    loadMeshes(objectCreator);
+
+    return objectCreator.make();
 
 }
-void ModelLoader::loadMeshes(const std::shared_ptr<Model> &thisModel) {
+void ObjectLoader::loadMeshes(ObjectCreator &objectCreator) {
     for(int i = 0; i < scene->mNumMeshes; i++) {
         aiMesh *assimpMesh = scene->mMeshes[i];
-        meshLoader.loadBasicMeshInfo(assimpMesh);
-        thisModel->meshes.push_back(meshLoader.make());
+        auto myMesh = meshLoader.loadSingleMesh(assimpMesh);
+        objectCreator.AddMesh(myMesh);
     }
 }
-
-#endif //OPENGLSETUP_OBJECTLOADER_H

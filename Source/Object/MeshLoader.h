@@ -16,14 +16,6 @@
 #include "Mesh.h"
 class MeshLoader{
 public:
-    std::shared_ptr<Mesh> loadMesh(const std::string & toMeshPath){
-        /* Assimp owns the aiScene*/
-        const aiScene * scene;
-        scene = assimpImporter.ReadFile(toMeshPath, aiProcessPreset_TargetRealtime_MaxQuality);
-
-        return loadSingleMesh(scene->mMeshes[0]);
-    };
-
     std::shared_ptr<Mesh> loadSingleMesh(aiMesh* assimpMesh){
         if(assimpMesh == nullptr){
             std::cerr << "Tried to load not existing Mesh\n";
@@ -71,7 +63,6 @@ public:
         return loadedMesh;
     }
 private:
-    Assimp::Importer assimpImporter;
 };
 
 

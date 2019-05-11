@@ -6,7 +6,17 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/Modules/")
 message(WARNING CMAKE_MODULE_PATH : ${PROJECT_SOURCE_DIR}/Modules/)
 
-set(SOURCE_FILES main.cpp audio.h audio.cpp Converter.h Object.h Mesh.h MeshLoader.h)
+set(SOURCE_FILES Source/main.cpp
+        Source/Audio/Audio.h Source/Audio/Audio.cpp
+        Source/Object/Converter.h
+        Source/Object/Object.h
+        Source/Object/ObjectLoader.h
+        Source/Object/ObjectMenager.h
+        Source/Object/Mesh.h
+        Source/Object/MeshLoader.h
+        Source/Menager.h Source/Menager.cpp
+        Source/Object/Converter.cpp Source/Utility.cpp Source/Object/ObjectMenager.cpp Source/Object/ObjectLoader.cpp)
+
 add_executable(OpenGlSetup ${SOURCE_FILES})
 
 find_package(glfw3 REQUIRED)
@@ -39,7 +49,7 @@ IF (NOT SDL2_MIXER_FOUND)
     message(WARNING SDL2_mixer-NOT-FOUND : ${SDL2_MIXER_INCLUDE_DIRS})
 ENDIF()
 
-find_package(OPENGL REQUIRED)
+find_package(OpenGL REQUIRED)
 IF (NOT OPENGL_FOUND)
     message(WARNING OPENGL-NOT-FOUND: ${OPENGL_INCLUDE_DIR})
 else()

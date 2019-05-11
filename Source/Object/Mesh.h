@@ -7,7 +7,7 @@
 
 #include <memory>
 #include <vector>
-#include "./glm/glm.hpp"
+#include <glm/glm.hpp>
 
 class Mesh {
 public:

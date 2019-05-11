@@ -16,10 +16,15 @@
 #include <assimp/postprocess.h>
 #include <assimp/Importer.hpp>
 
-#include <SDL2_mixer/SDL_mixer.h>
-#include "Audio.h"
-#include "ObjectMenager.h"
-#include "ObjectLoader.h"
+#ifdef __APPLE__
+#include <SDL2_Mixer/SDL_mixer.h>
+#elif __linux__
+#include <SDL2/SDL_mixer.h>
+#endif
+
+#include "Audio/Audio.h"
+#include "Object/ObjectMenager.h"
+#include "Object/ObjectLoader.h"
 
 
 class Menager {

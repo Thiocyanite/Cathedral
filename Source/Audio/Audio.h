@@ -5,8 +5,11 @@
 #ifndef OPENGLSETUP_AUDIO_H
 #define OPENGLSETUP_AUDIO_H
 
+#ifdef __APPLE__
 #include <SDL2_Mixer/SDL_mixer.h>
-
+#elif __linux__
+#include <SDL2/SDL_mixer.h>
+#endif
 
 class Audio{
 private:

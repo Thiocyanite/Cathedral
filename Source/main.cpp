@@ -9,7 +9,12 @@
 #include <assimp/postprocess.h>
 #include <assimp/Importer.hpp>
 
-#include <SDL2_mixer/SDL_mixer.h>
+#ifdef __APPLE__
+#include <SDL2_Mixer/SDL_mixer.h>
+#elif __linux__
+#include <SDL2/SDL_mixer.h>
+#endif
+
 #include "Menager.h"
 
 int main(int argc, char *argv[]) {

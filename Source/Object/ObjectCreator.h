@@ -1,18 +1,11 @@
 //
-// Created by Julia on 2019-05-07.
+// Created by dominik on 11.05.19.
 //
 
-#ifndef OPENGLSETUP_OBJECT_H
-#define OPENGLSETUP_OBJECT_H
-#include "Mesh.h"
-#include <iostream>
+#ifndef OPENGLSETUP_OBJECTCREATOR_H
+#define OPENGLSETUP_OBJECTCREATOR_H
 
-class Object{
-public:
-    Object();
-    std::vector<std::shared_ptr<Mesh>> meshes;
-};
-
+#include "Object.h"
 
 class ObjectCreator{
 private:
@@ -26,15 +19,17 @@ public:
     }
 
     std::shared_ptr<Object> make(){
-        std::shared_ptr<Object> returnObject=std::make_shared<Object>();
+        std::shared_ptr<Object> returnObject= std::make_shared<Object>();
         if (!isMesh)
-        {std::cerr<<"There is no mesh to create a model 😤\n ";
+        {
+            std::cerr << "There is no mesh to create a model 😤\n ";
         throw false;}
         returnObject->meshes=meshes;
         isMesh=false;
         return returnObject;
     }
-
 };
 
-#endif //OPENGLSETUP_OBJECT_H
+#include "Object.h"
+
+#endif //OPENGLSETUP_OBJECTCREATOR_H
