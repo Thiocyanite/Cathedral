@@ -10,14 +10,15 @@
 
 class Object{
     friend class ObjectCreator;
+private:
+    std::vector<std::shared_ptr<Mesh>> meshes; //Object is a group of meshes
 public:
     Object() = default;
 
     const std::vector<std::shared_ptr<Mesh>> &getMeshes() const {
         return meshes;
     }
-private:
-    std::vector<std::shared_ptr<Mesh>> meshes;
+
 };
 
 

@@ -21,7 +21,6 @@ public:
     ~Audio();
     void playEpica();
     void playAfter();
-    void playall();
     void stopaudio();
 };
 #endif //OPENGLSETUP_AUDIO_H

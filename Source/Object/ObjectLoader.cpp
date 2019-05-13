@@ -27,7 +27,7 @@ std::shared_ptr<Object> ObjectLoader::loadObject( const std::string &path ) {
                               aiProcess_Debone |
                               0);
     if (!scene) {
-        std::cerr<<"No object 😤\n";
+        std::cerr<<"No scene 😤\n";
     }
     loadMeshes(objectCreator);
 

@@ -30,7 +30,7 @@ public:
         bool hasTexCords = assimpMesh->HasTextureCoords(0);
         bool hasNormals = assimpMesh->HasNormals();
 
-        aiColor4D defaultColor(0.35f, 0.10f, 0.35f, 1.0f);
+        aiColor4D defaultColor(0.35f, 0.10f, 0.35f, 1.0f); //default purple
         aiVector3D defaultTexCoord(0.0f, 0.0f, 0.0f);
         aiVector3D defaultNormal(0.0f, 0.0f, 1.0f);
 
@@ -41,7 +41,7 @@ public:
             aiVector3D* texCords = hasTexCords ? assimpMesh->mTextureCoords[i] : & defaultTexCoord;
             aiVector3D* normals  = hasNormals  ? & assimpMesh->mNormals[i]     : & defaultNormal;
 
-            loadedMesh->pos.push_back( glmCast(*positions) );
+            loadedMesh->pos.push_back( glmCast(*positions) ); //setting  parameters
             loadedMesh->col.push_back( glmCast(*colors) );
             loadedMesh->texCords.push_back( glmCast(*texCords) );
             loadedMesh->normals.push_back( glmCast(*normals) );

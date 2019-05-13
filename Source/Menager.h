@@ -16,6 +16,8 @@
 #include <assimp/postprocess.h>
 #include <assimp/Importer.hpp>
 
+
+//if somebody is using different OS - add your elif
 #ifdef __APPLE__
 #include <SDL2_Mixer/SDL_mixer.h>
 #elif __linux__
@@ -36,6 +38,8 @@ Audio *audi; //Audio system
     std::vector<glm::vec3> positions;
     std::vector<glm::vec3> rotations;
     std::vector<glm::vec3> scales;
+    // there will be observer
+
 public:
     Menager();
     ~Menager();
@@ -43,7 +47,8 @@ public:
     void stopMusic(){audi->stopaudio();};
     void playEpica(){audi->playEpica();};
     void playAfter(){audi->playAfter();};
-    void loadObjects(std::string &fileWithPaths, std::string &fileWithParameters);
+    void loadObjects();
+    static void keyboard(GLFWwindow *window, int key, int scancode, int action, int mods); //keyboard
 };
 
 

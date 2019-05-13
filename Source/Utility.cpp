@@ -4,6 +4,8 @@
 
 #include "Utility.h"
 
+
+
 std::string getFileExt(const std::string &s) {
 
     size_t i = s.rfind('.', s.length());
@@ -15,15 +17,14 @@ std::string getFileExt(const std::string &s) {
 }
 
 std::string getFileDir(const std::string &s) {
-#ifdef __linux__
-    size_t i = s.rfind('/', s.length());
-    return(s.substr(0, i));
+#ifdef _WIN32
 
-#elif _WIN32
-    size_t i = s.rfind('\\', s.length());
+size_t i = s.rfind('\\', s.length()); //Windows version
     return(s.substr(0, i));
 #else
-#error "OS not supported"
+    size_t i = s.rfind('/', s.length()); //*nix version
+    return(s.substr(0, i));
+
 #endif
 }
 

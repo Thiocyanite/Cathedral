@@ -12,7 +12,7 @@ private:
     std::vector<std::shared_ptr<Mesh>> meshes;
     bool isMesh = false;
 public:
-    ObjectCreator& AddMesh(const std::shared_ptr<Mesh>& mesh){
+    ObjectCreator& AddMesh(const std::shared_ptr<Mesh>& mesh){ //because Object can have a few meshes
         meshes.push_back(mesh);
         isMesh = true;
         return *this;
@@ -20,7 +20,7 @@ public:
 
     std::shared_ptr<Object> make(){
         std::shared_ptr<Object> returnObject= std::make_shared<Object>();
-        if (!isMesh)
+        if (!isMesh) //Object has to have at least one mesh
         {
             std::cerr << "There is no mesh to create a model 😤\n ";
         throw false;}

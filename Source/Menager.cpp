@@ -8,12 +8,26 @@
 #include <stdlib.h>
 #include <glm/glm.hpp>
 
+void Menager::keyboard(GLFWwindow *window, int key, int scancode, int action, int mods) {
+auto  *menager= reinterpret_cast<Menager*>(glfwGetWindowUserPointer(window));
+if (action==GLFW_PRESS){
+    if (key==GLFW_KEY_A) //example action
+        menager->playAfter();
 
-void Menager::loadObjects(std::string &fileWithPaths, std::string &fileWithParameters) {
+}
+}
+
+
+void Menager::loadObjects() {
     std::fstream objects, parameters;
-    objects.open(fileWithPaths.c_str(), std::ios::in);
-    parameters.open(fileWithParameters.c_str(), std::ios::in);
-    if (objects.fail() || parameters.fail() )
+#ifdef _WIN32
+
+    objects.open("Paths_for_retardation_OS.txt", std::ios::in); //Couse Windows have insane paths
+#else
+    objects.open("Paths_for_normal_OS.txt", std::ios::in); //for *nix systems
+#endif
+    parameters.open("Positions.txt", std::ios::in);
+    if (objects.fail() || parameters.fail() ) //checks if both files are open
     {
         std::cerr<<"Couldn't open one of the important files 😫\n";
         exit(0);
@@ -41,61 +55,54 @@ void Menager::loadObjects(std::string &fileWithPaths, std::string &fileWithParam
                 parameters>>par[0];} //we have to leave the paramethers if we don't have object
         }
     }
-
-
-
+    objects.close();
+    parameters.close();
 }
 
 
 void Menager::mainloop() {
 
-
-
-    while (!glfwWindowShouldClose(window)) //Tak długo jak okno nie powinno zostać zamknięte
+    while (!glfwWindowShouldClose(window))
     {
         auto time = static_cast<float>(glfwGetTime());
         glClearColor(sin(time), cos(time), 0.f, 1.f);
         glClear(GL_COLOR_BUFFER_BIT);
-        glfwPollEvents(); //Wykonaj procedury callback w zalezności od zdarzeń jakie zaszły.
+        glfwPollEvents();
         glfwSwapBuffers(window);
     }
-
 }
 
 
 
 Menager::Menager() {
-    if (!glfwInit()) { //Zainicjuj bibliotekę GLFW
-        fprintf(stderr, "Nie można zainicjować GLFW.\n");
+    if (!glfwInit()) {
+        fprintf(stderr, "No GLFW 😢\n");
         exit(EXIT_FAILURE);
     }
 
-    window = glfwCreateWindow(500, 500, "Cathedral", NULL, NULL);  //Utwórz okno 500x500 o tytule "OpenGL" i kontekst OpenGL.
-
-    if (!window) //Jeżeli okna nie udało się utworzyć, to zamknij program
+    window = glfwCreateWindow(1920, 1080, "Cathedral", NULL, NULL);  //Creating a window in FullHD
+    glfwSetWindowUserPointer(window, this);
+    glfwSetKeyCallback(window, keyboard);
+    if (!window)
     {
-        fprintf(stderr, "Nie można utworzyć okna.\n");
+        fprintf(stderr, "Even there's no Window[s], there's a problem 🤪 \n");
         glfwTerminate();
         exit(EXIT_FAILURE);
     }
 
-    glfwMakeContextCurrent(window); //Od tego momentu kontekst okna staje się aktywny i polecenia OpenGL będą dotyczyć właśnie jego.
-    glfwSwapInterval(1); //Czekaj na 1 powrót plamki przed pokazaniem ukrytego bufora
+    glfwMakeContextCurrent(window);
+    glfwSwapInterval(1);
 
-    if (glewInit() != GLEW_OK) { //Zainicjuj bibliotekę GLEW
-        fprintf(stderr, "Nie można zainicjować GLEW.\n");
-        exit(EXIT_FAILURE);
-    }
     audi = new Audio();
     audi->playEpica();
+
 }
-
-
 
 
 Menager::~Menager() {
     delete audi;
-    glfwDestroyWindow(window); //Usuń kontekst OpenGL i okno
-    glfwTerminate(); //Zwolnij zasoby zajęte przez GLFW
+    glfwDestroyWindow(window);
+    glfwTerminate();
     exit(EXIT_SUCCESS);
 }
+
