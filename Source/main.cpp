@@ -17,8 +17,8 @@
 #endif
 
 #include "Menager.h"
+#include "Observer.h"
 Menager menager;
-
 
 
 int main(int argc, char *argv[]) {

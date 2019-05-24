@@ -27,6 +27,7 @@
 #include "Audio/Audio.h"
 #include "Object/ObjectMenager.h"
 #include "Object/ObjectLoader.h"
+#include "Observer.h"
 
 
 class Menager {
@@ -38,7 +39,7 @@ Audio *audi; //Audio system
     std::vector<glm::vec3> positions;
     std::vector<glm::vec3> rotations;
     std::vector<glm::vec3> scales;
-    // there will be observer
+    static Observer *observer;
 
 public:
     Menager();

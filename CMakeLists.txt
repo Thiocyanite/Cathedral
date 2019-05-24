@@ -15,7 +15,7 @@ set(SOURCE_FILES Source/main.cpp
         Source/Object/Mesh.h
         Source/Object/MeshLoader.h
         Source/Menager.h Source/Menager.cpp
-        Source/Object/Converter.cpp Source/Utility.cpp Source/Object/ObjectLoader.cpp Source/Shader.cpp Source/Shader.h)
+        Source/Object/Converter.cpp Source/Utility.cpp Source/Object/ObjectLoader.cpp Source/Shader.cpp Source/Shader.h Source/Observer.cpp Source/Observer.h)
 
 add_executable(OpenGlSetup ${SOURCE_FILES})
 
