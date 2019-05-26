@@ -8,6 +8,15 @@
 #include <stdlib.h>
 #include <glm/glm.hpp>
 
+
+void Menager::DrawScene() {
+    auto time = static_cast<float>(glfwGetTime());
+    glClearColor(sin(time), cos(time), 0.f, 1.f);
+    glClear(GL_COLOR_BUFFER_BIT);
+
+    glfwSwapBuffers(window);
+}
+
 void Menager::keyboard(GLFWwindow *window, int key, int scancode, int action, int mods) {
 auto  *menager= reinterpret_cast<Menager*>(glfwGetWindowUserPointer(window));
 if (action==GLFW_PRESS){
@@ -26,7 +35,7 @@ void Menager::loadObjects() {
 #else
     objects.open("Paths_for_normal_OS.txt", std::ios::in); //for *nix systems
 #endif
-    parameters.open("Positions.txt", std::ios::in);
+    parameters.open("Positions.txt", std::ios::in); //in world
     if (objects.fail() || parameters.fail() ) //checks if both files are open
     {
         std::cerr<<"Couldn't open one of the important files 😫\n";
@@ -38,8 +47,11 @@ void Menager::loadObjects() {
     while (!objects.eof()){
         objects>>pathToObject;
         try{
+            std::cout<<"In the loop\n";
             loadingOne=objLoad.loadObject(pathToObject.c_str()); //if the object is loaded, it's ok
+            std::cout<<"loaded\n";
             stableObjects.addObject(loadingOne);
+            std::cout<<"Object added\n";
             for (int i=0;i<3;i++){
                  parameters>>par[i];}
             positions.push_back(glm::vec3(atof(par[0].c_str()),atof(par[1].c_str()),atof(par[3].c_str())));
@@ -64,11 +76,8 @@ void Menager::mainloop() {
 
     while (!glfwWindowShouldClose(window))
     {
-        auto time = static_cast<float>(glfwGetTime());
-        glClearColor(sin(time), cos(time), 0.f, 1.f);
-        glClear(GL_COLOR_BUFFER_BIT);
+        DrawScene();
         glfwPollEvents();
-        glfwSwapBuffers(window);
     }
 }
 

@@ -22,8 +22,7 @@ Menager menager;
 
 
 int main(int argc, char *argv[]) {
-
-//menager.loadObjects();
+    menager.loadObjects();
 
 menager.mainloop();
 

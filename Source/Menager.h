@@ -48,6 +48,7 @@ public:
     void playEpica(){audi->playEpica();};
     void playAfter(){audi->playAfter();};
     void loadObjects();
+    void DrawScene();
     static void keyboard(GLFWwindow *window, int key, int scancode, int action, int mods); //keyboard
 };
 

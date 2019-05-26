@@ -29,7 +29,7 @@ public:
         bool hasColors = assimpMesh->HasVertexColors(0);
         bool hasTexCords = assimpMesh->HasTextureCoords(0);
         bool hasNormals = assimpMesh->HasNormals();
-
+        bool hasTex= assimpMesh->HasTextureCoords(0);
         aiColor4D defaultColor(0.35f, 0.10f, 0.35f, 1.0f); //default purple
         aiVector3D defaultTexCoord(0.0f, 0.0f, 0.0f);
         aiVector3D defaultNormal(0.0f, 0.0f, 1.0f);
@@ -43,7 +43,7 @@ public:
 
             loadedMesh->pos.push_back( glmCast(*positions) ); //setting  parameters
             loadedMesh->col.push_back( glmCast(*colors) );
-            loadedMesh->texCords.push_back( glmCast(*texCords) );
+
             loadedMesh->normals.push_back( glmCast(*normals) );
         }
 
@@ -63,6 +63,7 @@ public:
         return loadedMesh;
     }
 private:
+
 };
 
 

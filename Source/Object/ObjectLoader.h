@@ -26,7 +26,6 @@ private:
     inline static MeshLoader meshLoader;
     inline static Assimp::Importer importer;
     inline static std::string directory;
-
     static void loadMeshes(ObjectCreator &objectCreator);
 };
 
