@@ -31,19 +31,18 @@ public:
         bool hasNormals = assimpMesh->HasNormals();
         bool hasTex= assimpMesh->HasTextureCoords(0);
         aiColor4D defaultColor(0.35f, 0.10f, 0.35f, 1.0f); //default purple
-        aiVector3D defaultTexCoord(0.0f, 0.0f, 0.0f);
+        aiVector3D defaultTexCoord = aiVector3D(0.0f, 0.0f, 0.0f);
         aiVector3D defaultNormal(0.0f, 0.0f, 1.0f);
 
         for(unsigned int i = 0; i < numVertices; i++){
             aiVector3D* positions = &assimpMesh->mVertices[i];
-
+            bool tex=hasTexCords;
             aiColor4D* colors    = hasColors   ? assimpMesh->mColors[i]         : & defaultColor;
-            aiVector3D* texCords = hasTexCords ? assimpMesh->mTextureCoords[i] : & defaultTexCoord;
+            //aiVector3D* texCords = hasTexCords ? assimpMesh->mTextureCoords[i] : & defaultTexCoord;
             aiVector3D* normals  = hasNormals  ? & assimpMesh->mNormals[i]     : & defaultNormal;
-
+            loadedMesh->texCords.push_back(glmCast(defaultTexCoord));
             loadedMesh->pos.push_back( glmCast(*positions) ); //setting  parameters
             loadedMesh->col.push_back( glmCast(*colors) );
-
             loadedMesh->normals.push_back( glmCast(*normals) );
         }
 
