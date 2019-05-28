@@ -24,22 +24,23 @@
 #include <SDL2/SDL_mixer.h>
 #endif
 
-#include "Audio/Audio.h"
 #include "Object/ObjectMenager.h"
 #include "Object/ObjectLoader.h"
-#include "Observer.h"
 
+/* Those two */
+class Audio;
+class Observer;
 
 class Menager {
 private:
-Audio *audi; //Audio system
+    Audio *audi; //Audio system
     GLFWwindow* window; //Main window
     ObjectLoader objLoad;
     ObjectMenager stableObjects;
     std::vector<glm::vec3> positions;
     std::vector<glm::vec3> rotations;
     std::vector<glm::vec3> scales;
-    static Observer *observer;
+    Observer *observer;
 
 public:
     Menager();
