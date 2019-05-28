@@ -9,6 +9,7 @@
 #include <glm/glm.hpp>
 
 
+
 void Menager::DrawScene() {
     auto time = static_cast<float>(glfwGetTime());
     glClearColor(sin(time), cos(time), 0.f, 1.f);
@@ -17,13 +18,17 @@ void Menager::DrawScene() {
     glfwSwapBuffers(window);
 }
 
-void Menager::keyboard(GLFWwindow *window, int key, int scancode, int action, int mods) {
-auto  *menager= reinterpret_cast<Menager*>(glfwGetWindowUserPointer(window));
-if (action==GLFW_PRESS){
-    if (key==GLFW_KEY_A) //example action
-        menager->playAfter();
 
-}
+
+void Menager::key(){
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+        observer->moveForward(0.1);
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+        observer->moveForward(-0.1);
+    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+        observer->moveAside(-0.05);
+    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+        observer->moveAside(0.05);
 }
 
 
@@ -47,11 +52,8 @@ void Menager::loadObjects() {
     while (!objects.eof()){
         objects>>pathToObject;
         try{
-            std::cout<<"In the loop\n";
             loadingOne=objLoad.loadObject(pathToObject.c_str()); //if the object is loaded, it's ok
-            std::cout<<"loaded\n";
             stableObjects.addObject(loadingOne);
-            std::cout<<"Object added\n";
             for (int i=0;i<3;i++){
                  parameters>>par[i];}
             positions.push_back(glm::vec3(atof(par[0].c_str()),atof(par[1].c_str()),atof(par[3].c_str())));
@@ -77,7 +79,8 @@ void Menager::mainloop() {
     while (!glfwWindowShouldClose(window))
     {
         DrawScene();
-        glfwPollEvents();
+        //glfwPollEvents();
+        key();
     }
 }
 
@@ -91,7 +94,7 @@ Menager::Menager() {
 
     window = glfwCreateWindow(1920, 1080, "Cathedral", NULL, NULL);  //Creating a window in FullHD
     glfwSetWindowUserPointer(window, this);
-    glfwSetKeyCallback(window, keyboard);
+
     if (!window)
     {
         fprintf(stderr, "Even there's no Window[s], there's a problem 🤪 \n");
