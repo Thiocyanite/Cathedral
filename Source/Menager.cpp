@@ -8,6 +8,9 @@
 #include <stdlib.h>
 #include <glm/glm.hpp>
 
+#include "Audio/Audio.h"
+#include "Observer.h"
+
 
 
 void Menager::DrawScene() {
