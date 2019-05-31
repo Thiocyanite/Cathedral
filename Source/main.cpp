@@ -17,11 +17,12 @@
 #endif
 
 #include "Menager.h"
-Menager menager;
+
 
 
 
 int main(int argc, char *argv[]) {
+    Menager menager;
     menager.loadObjects();
 
 menager.mainloop();

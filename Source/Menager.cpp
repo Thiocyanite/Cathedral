@@ -82,7 +82,7 @@ void Menager::mainloop() {
     while (!glfwWindowShouldClose(window))
     {
         DrawScene();
-        //glfwPollEvents();
+        glfwPollEvents();
         key();
     }
 }
@@ -121,3 +121,6 @@ Menager::~Menager() {
     exit(EXIT_SUCCESS);
 }
 
+void Menager::stopMusic(){audi->stopaudio();};
+void Menager::playEpica(){audi->playEpica();};
+void Menager::playAfter(){audi->playAfter();};

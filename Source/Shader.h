@@ -7,23 +7,23 @@
 
 #include <GL/glew.h>
 #include <string>
+#include <map>
 
 class Shader {
 private:
-    GLuint MainShader;
-    GLuint VertexShader;
-    GLuint GeometryShader;
-    GLuint FragmentShader;
-    const std::string File;
-    char* readFile(const std::string File);
-    GLuint loadShader(GLenum shaderType, std::string File);
 
+    std::string readFile( std::string path);
+    void loadShader(std::string path, GLuint ShaderType);
+    GLuint programName = 0;
+    int numShaders = 0;
+    GLuint shaderNames[3] = {0,0,0};
+    std::map<std::string, GLint> uniformLocationsMap;
+    void freeShaders();
 public:
-    Shader(const std::string vertexShaderFile,const std::string geometryShaderFile,const std::string fragmentShaderFile);
-    ~Shader();
-    void use();
-    GLuint u(const std::string File);
-    GLuint a(const std::string File);
+    void loadProgram(std::string vertex, std::string geometry,std::string fragment);
+    void use(){ glUseProgram(programName); }
+    void freeProgram();
+    GLint getU(const std::string uniformName);
 };
 
 
