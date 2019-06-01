@@ -6,28 +6,16 @@
 #define OPENGLSETUP_OBJECTCREATOR_H
 
 #include "Object.h"
+#include "ObjectCreationTools.h"
 
-class ObjectCreator{
-private:
-    std::vector<std::shared_ptr<Mesh>> meshes;
-    bool isMesh = false;
+class ObjectCreator : public  ObjectCreationTools{
 public:
-    ObjectCreator& AddMesh(const std::shared_ptr<Mesh>& mesh){ //because Object can have a few meshes
-        meshes.push_back(mesh);
-        isMesh = true;
+    inline ObjectCreator& AddMesh(const std::shared_ptr<Mesh>& mesh){
+        ObjectCreationTools::innerAddMesh(mesh);
         return *this;
     }
 
-    std::shared_ptr<Object> make(){
-        std::shared_ptr<Object> returnObject= std::make_shared<Object>();
-        if (!isMesh) //Object has to have at least one mesh
-        {
-            std::cerr << "There is no mesh to create a model 😤\n ";
-        throw false;}
-        returnObject->meshes=meshes;
-        isMesh=false;
-        return returnObject;
-    }
+    inline std::shared_ptr<Object> make() { return ObjectCreationTools::innerMake<Object>(); }
 };
 
 #include "Object.h"

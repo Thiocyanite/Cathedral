@@ -9,7 +9,8 @@
 #include <memory>
 
 class Object{
-    friend class ObjectCreator;
+    friend class ObjectCreationTools;
+    friend class AnimatedObjectCreator;
 private:
     std::vector<std::shared_ptr<Mesh>> meshes; //Object is a group of meshes
 public:

@@ -19,7 +19,10 @@ set(SOURCE_FILES Source/main.cpp
         Source/Object/Converter.cpp
         Source/Utility.cpp
         Source/Object/ObjectLoader.cpp
-        Source/Shader.cpp Source/Shader.h)
+        Source/Shader.cpp Source/Shader.h
+        Source/Object/AnimatedObject.cpp Source/Object/AnimatedObject.h
+        Source/Object/AnimatedObjectCreator.cpp Source/Object/AnimatedObjectCreator.h
+        Source/Object/ObjectCreationTools.cpp Source/Object/ObjectCreationTools.h)
 
 add_executable(OpenGlSetup ${SOURCE_FILES})
 

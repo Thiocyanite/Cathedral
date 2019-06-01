@@ -35,6 +35,8 @@ void Menager::key(){
 }
 
 
+#pragma clang diagnostic push
+#pragma ide diagnostic ignored "cert-err34-c"
 void Menager::loadObjects() {
     std::fstream objects, parameters;
 #ifdef _WIN32
@@ -54,27 +56,37 @@ void Menager::loadObjects() {
     std::string pathToObject, par[3];
     while (!objects.eof()){
         objects>>pathToObject;
-        try{
-            loadingOne=objLoad.loadObject(pathToObject.c_str()); //if the object is loaded, it's ok
-            stableObjects.addObject(loadingOne);
-            for (int i=0;i<3;i++){
-                 parameters>>par[i];}
-            positions.push_back(glm::vec3(atof(par[0].c_str()),atof(par[1].c_str()),atof(par[3].c_str())));
-            for (int i=0;i<3;i++){
-                parameters>>par[i];}
-            rotations.push_back(glm::vec3(atof(par[0].c_str()),atof(par[1].c_str()),atof(par[3].c_str())));
-            for (int i=0;i<3;i++){
-                parameters>>par[i];}
-            scales.push_back(glm::vec3(atof(par[0].c_str()),atof(par[1].c_str()),atof(par[3].c_str())));
-        }
-        catch (...){
-            for (int i=0;i<9;i++){
-                parameters>>par[0];} //we have to leave the paramethers if we don't have object
+        //An empty file will load an empty string once
+        if(!pathToObject.empty()){
+            try{
+                loadingOne=objLoad.loadObject(pathToObject); //if the object is loaded, it's ok
+                stableObjects.addObject(loadingOne);
+
+                for (auto &i : par)
+                     parameters >> i;
+
+                positions.emplace_back(atof(par[0].c_str()), atof(par[1].c_str()), atof(par[3].c_str()) );
+
+                for (auto &i : par)
+                    parameters >> i;
+
+                rotations.emplace_back(atof(par[0].c_str()), atof(par[1].c_str()), atof(par[3].c_str()) );
+
+                for (auto &i : par)
+                    parameters >> i;
+
+                scales.emplace_back(atof(par[0].c_str()), atof(par[1].c_str()), atof(par[3].c_str()) );
+            }
+            catch (...){
+                for (int i=0;i<9;i++){
+                    parameters>>par[0];} //we have to leave the paramethers if we don't have object
+            }
         }
     }
     objects.close();
     parameters.close();
 }
+#pragma clang diagnostic pop /* Drop clang waring about atof not checking formatting. */
 
 
 void Menager::mainloop() {
@@ -82,7 +94,7 @@ void Menager::mainloop() {
     while (!glfwWindowShouldClose(window))
     {
         DrawScene();
-        //glfwPollEvents();
+        glfwPollEvents();
         key();
     }
 }

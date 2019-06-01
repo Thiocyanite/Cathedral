@@ -26,9 +26,9 @@
 
 #include "Object/ObjectMenager.h"
 #include "Object/ObjectLoader.h"
+#include "Audio/Audio.h"
 
 /* Those two */
-class Audio;
 class Observer;
 
 class Menager {
