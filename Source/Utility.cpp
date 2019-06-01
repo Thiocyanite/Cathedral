@@ -4,7 +4,7 @@
 
 #include "Utility.h"
 
-
+#include <sstream>
 
 std::string getFileExt(const std::string &s) {
 
@@ -53,4 +53,20 @@ std::string longestCommonString(std::string a, std::string b) {
         }
     }
     return current_lcs;
+}
+
+std::string numToStrWithPadding(int num, int width)
+{
+    std::stringstream ss;
+
+    // the number is converted to string with the help of stringstream
+    ss << num;
+    std::string ret;
+    ss >> ret;
+
+    // Append zero chars
+    int str_length = ret.length();
+    for (int i = 0; i < width - str_length; i++)
+        ret = "0" + ret;
+    return ret;
 }

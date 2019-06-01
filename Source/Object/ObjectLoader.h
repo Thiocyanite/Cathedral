@@ -15,7 +15,8 @@
 #include "Object.h"
 #include "ObjectLoader.h"
 #include "../Utility.h"
-#include "ObjectCreator.h"
+#include "ObjectCreationTools.h"
+#include "AnimatedObjectCreator.h"
 
 class Object;
 class AnimatedObject;
@@ -29,7 +30,10 @@ private:
     inline static MeshLoader meshLoader;
     inline static Assimp::Importer importer;
     inline static std::string directory;
-    static void loadMeshes(ObjectCreator &objectCreator);
+    static void loadMeshes(ObjectCreationTools *objectCreator);
+    static void loadKeyframe(AnimatedObjectCreator *objectCreator);
+
+    void loadScene(const std::string &path) const;
 };
 
 #endif //OPENGLSETUP_OBJECTLOADER_H

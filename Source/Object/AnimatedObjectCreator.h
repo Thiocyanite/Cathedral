@@ -20,11 +20,6 @@ public:
         keyframes.emplace_back(0.0, meshes);
     }
 
-    AnimatedObjectCreator& AddMesh(std::shared_ptr<Mesh>& mesh){
-        ObjectCreationTools::innerAddMesh(mesh);
-        return *this;
-    }
-
     std::shared_ptr<AnimatedObject> make(float animationTime) {
         std::shared_ptr<AnimatedObject> animatedObject = ObjectCreationTools::innerMake<AnimatedObject>();
 
@@ -35,6 +30,11 @@ public:
             timeStamp += keyframeInterval;
         }
 
+        animatedObject->animationTime = animationTime;
+        animatedObject->keyframeDuration=keyframeInterval;
+        animatedObject->keyframes = keyframes;
+
+        keyframes.clear();
 
         return animatedObject;
     }

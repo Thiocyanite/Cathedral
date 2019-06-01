@@ -23,6 +23,8 @@ std::string getFileExt(const std::string& s);
 
 std::string getFileDir(const std::string& s);
 
+std::string numToStrWithPadding(int num, int width);
+
 /* All credit to Cormac Guerin: https://stackoverflow.com/questions/10248728/how-to-find-longest-common-substring-using-c
  * */
 std::string longestCommonString( std::string a, std::string b );

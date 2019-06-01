@@ -29,7 +29,7 @@ protected:
     }
 
 public:
-    inline void innerAddMesh(const std::shared_ptr<Mesh>& mesh){ //because Object can have few meshes
+    inline void AddMesh(const std::shared_ptr<Mesh>& mesh){ //because Object can have few meshes
         meshes.push_back(mesh);
         isMesh = true;
     }

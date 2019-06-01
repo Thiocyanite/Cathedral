@@ -11,7 +11,7 @@
 #include "Audio/Audio.h"
 #include "Observer.h"
 
-
+#include "Object/AnimatedObject.h"
 
 void Menager::DrawScene() {
     auto time = static_cast<float>(glfwGetTime());
@@ -38,10 +38,14 @@ void Menager::key(){
 #pragma clang diagnostic push
 #pragma ide diagnostic ignored "cert-err34-c"
 void Menager::loadObjects() {
+
+    /*TEST ANIMATED OBJECT LOADING*/
+    auto animatedObj = objLoad.loadAnimation("Models/Cowboy/HowToLoad.txt");
+
+    /*TEST ANIMATED OBJECT LOADING*/
     std::fstream objects, parameters;
 #ifdef _WIN32
-
-    objects.open("Paths_for_retardation_OS.txt", std::ios::in); //Couse Windows have insane paths
+    objects.open("Paths_for_retarded_OS.txt", std::ios::in); //Cause Windows have insane paths
 #else
     objects.open("Paths_for_normal_OS.txt", std::ios::in); //for *nix systems
 #endif

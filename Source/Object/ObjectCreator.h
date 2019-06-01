@@ -10,10 +10,6 @@
 
 class ObjectCreator : public  ObjectCreationTools{
 public:
-    inline ObjectCreator& AddMesh(const std::shared_ptr<Mesh>& mesh){
-        ObjectCreationTools::innerAddMesh(mesh);
-        return *this;
-    }
 
     inline std::shared_ptr<Object> make() { return ObjectCreationTools::innerMake<Object>(); }
 };
