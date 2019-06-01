@@ -10,6 +10,7 @@
 
 #include "Audio/Audio.h"
 #include "Observer.h"
+#include "Shader.h"
 
 
 
@@ -89,25 +90,11 @@ void Menager::mainloop() {
 
 
 
-Menager::Menager() {
-    if (!glfwInit()) {
-        fprintf(stderr, "No GLFW 😢\n");
-        exit(EXIT_FAILURE);
-    }
-
-    window = glfwCreateWindow(1920, 1080, "Cathedral", NULL, NULL);  //Creating a window in FullHD
+Menager::Menager(GLFWwindow* _window) {
+    window=_window;
     glfwSetWindowUserPointer(window, this);
-
-    if (!window)
-    {
-        fprintf(stderr, "Even there's no Window[s], there's a problem 🤪 \n");
-        glfwTerminate();
-        exit(EXIT_FAILURE);
-    }
-
-    glfwMakeContextCurrent(window);
-    glfwSwapInterval(1);
-
+    shader=new Shader();
+    shader->loadProgram("vertexshader.glsl", "\0","fragmentshader.glsl");
     audi = new Audio();
     audi->playEpica();
 

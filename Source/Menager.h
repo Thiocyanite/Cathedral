@@ -30,6 +30,7 @@
 /* Those two */
 class Audio;
 class Observer;
+class Shader;
 
 class Menager {
 private:
@@ -41,9 +42,10 @@ private:
     std::vector<glm::vec3> rotations;
     std::vector<glm::vec3> scales;
     Observer *observer;
+    Shader *shader;
 
 public:
-    Menager();
+    Menager(GLFWwindow* _window);
     ~Menager();
     void mainloop();
     void stopMusic();

@@ -18,7 +18,7 @@ void Shader::loadProgram(std::string vertex, std::string geometry, std::string f
 }
 
 void Shader::loadShader(std::string path, GLuint ShaderType) {
-    std::string shaderSourceCode = readFile(path);
+    std::string shaderSourceCode = readFile(path.c_str());
     GLuint shaderName = glCreateShader(ShaderType);
 
     const char *const_source_code_ptr = shaderSourceCode.c_str();

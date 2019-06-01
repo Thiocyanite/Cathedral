@@ -24,6 +24,8 @@ public:
     void use(){ glUseProgram(programName); }
     void freeProgram();
     GLint getU(const std::string uniformName);
+    Shader(){};
+    ~Shader(){};
 };
 
 
