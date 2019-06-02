@@ -10,6 +10,8 @@
 #include <glm/glm.hpp>
 #include <GL/glew.h>
 
+#include "../Utility.h"
+
 class Mesh {
 public:
     std::vector<glm::vec3> pos;
@@ -20,11 +22,6 @@ public:
     std::vector<unsigned int> indicies;
 
     GLuint vertexArrayObject, bufferObjects[5];
-
-    template<class Vec>
-    auto getVecSizeInBytes(Vec vec){
-        return sizeof(vec[0]) * vec.size();
-    }
 
     void initVAO(){
         glGenVertexArrays(1, &vertexArrayObject);
@@ -61,6 +58,23 @@ public:
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, getVecSizeInBytes(indicies), indicies.data(), GL_STATIC_DRAW);
 
         glBindVertexArray(0);
+    }
+
+    void reloadVAO(){
+        glBindBuffer(GL_ARRAY_BUFFER, bufferObjects[0]);
+        glBufferSubData(GL_ARRAY_BUFFER, 0, getVecSizeInBytes(pos), pos.data());
+
+        glBindBuffer(GL_ARRAY_BUFFER, bufferObjects[1]);
+        glBufferSubData(GL_ARRAY_BUFFER, 0, getVecSizeInBytes(col), col.data());
+
+        glBindBuffer(GL_ARRAY_BUFFER, bufferObjects[2]);
+        glBufferSubData(GL_ARRAY_BUFFER, 0, getVecSizeInBytes(texCords), texCords.data());
+
+        glBindBuffer(GL_ARRAY_BUFFER, bufferObjects[3]);
+        glBufferSubData(GL_ARRAY_BUFFER, 0, getVecSizeInBytes(normals), normals.data());
+
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, bufferObjects[4]);
+        glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, getVecSizeInBytes(indicies), indicies.data());
     }
 
     inline void bindVAO(){

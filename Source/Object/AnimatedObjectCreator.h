@@ -36,6 +36,8 @@ public:
 
         keyframes.clear();
 
+        animatedObject->initAnimationVAO();
+
         return animatedObject;
     }
 };

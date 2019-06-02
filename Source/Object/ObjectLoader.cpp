@@ -32,7 +32,8 @@ void ObjectLoader::loadScene(const std::string &path) const {
     scene = importer.ReadFile(path.c_str(),
                               aiProcess_CalcTangentSpace |
                               aiProcess_GenSmoothNormals |
-                              aiProcess_JoinIdenticalVertices |
+                                      /*Breaks animations, because it changes vertex order.*/
+                              //aiProcess_JoinIdenticalVertices |
                               aiProcess_ImproveCacheLocality |
                               aiProcess_LimitBoneWeights |
                               aiProcess_RemoveRedundantMaterials |
@@ -119,7 +120,7 @@ void ObjectLoader::loadKeyframe(AnimatedObjectCreator *objectCreator) {
     std::vector<std::shared_ptr<Mesh>> meshes;
     for(int i = 0; i < scene->mNumMeshes; i++) {
         aiMesh *assimpMesh = scene->mMeshes[i];
-        meshes.push_back( meshLoader.loadSingleMesh(assimpMesh) );
+        meshes.push_back(meshLoader.loadSingleMesh(assimpMesh, false));
     }
     objectCreator->AddKeyframe(meshes);
 }

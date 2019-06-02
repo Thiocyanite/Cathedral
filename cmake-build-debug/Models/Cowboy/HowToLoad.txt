@@ -1,0 +1,12 @@
+# static Pose
+cowboy.obj
+# name
+Keyframes/cowboy_
+# number formatting
+6
+# amount
+20
+# file type
+.obj
+#Duration time in seconds
+1.0

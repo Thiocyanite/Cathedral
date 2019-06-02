@@ -19,6 +19,11 @@ ostream& operator<<(ostream& os, const vector<T>& v)
     return os;
 }
 
+template<class Vec>
+auto getVecSizeInBytes(Vec vec){
+    return sizeof(vec[0]) * vec.size();
+}
+
 std::string getFileExt(const std::string& s);
 
 std::string getFileDir(const std::string& s);
