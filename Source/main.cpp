@@ -17,11 +17,34 @@
 #endif
 
 #include "Menager.h"
-Menager menager;
+
 
 
 
 int main(int argc, char *argv[]) {
+
+
+    if (!glfwInit()) {
+        fprintf(stderr, "No GLFW 😢\n");
+        exit(EXIT_FAILURE);
+    }
+    GLFWwindow* window;
+    window = glfwCreateWindow(1920, 1080, "Cathedral", NULL, NULL);  //Creating a window in FullHD
+
+    if (!glewInit()){
+     std::cerr<<"No glew 🤯\n";
+     exit(EXIT_FAILURE);
+    }
+    if (!window)
+    {
+        fprintf(stderr, "Even there's no Window[s], there's a problem 🤪 \n");
+        glfwTerminate();
+        exit(EXIT_FAILURE);
+    }
+
+    glfwMakeContextCurrent(window);
+    glfwSwapInterval(1);
+    Menager menager(window);
     menager.loadObjects();
 
 menager.mainloop();
