@@ -8,20 +8,23 @@
 #include <stdlib.h>
 #include <glm/glm.hpp>
 
+
+Observer* Menager::observer = new Observer();
+
 void Menager::keyboard(GLFWwindow *window, int key, int scancode, int action, int mods) {
-auto  *menager= reinterpret_cast<Menager*>(glfwGetWindowUserPointer(window));
-if (action==GLFW_PRESS){
-    if (key==GLFW_KEY_P) //example action
-        menager->playAfter();
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        observer->moveForward(0.1);
-    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        observer->moveForward(-0.1);
-    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        observer->moveAside(-0.05);
-    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        observer->moveAside(0.05);
-}
+    auto  *menager= reinterpret_cast<Menager*>(glfwGetWindowUserPointer(window));
+    if (action==GLFW_PRESS){
+        if (key==GLFW_KEY_P) //example action
+            menager->playAfter();
+        if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+            observer->moveForward(0.1);
+        if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+            observer->moveForward(-0.1);
+        if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+            observer->moveAside(-0.05);
+        if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+            observer->moveAside(0.05);
+    }
 }
 
 
@@ -100,10 +103,14 @@ Menager::Menager() {
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1);
 
+    GLenum err = glewInit();
+    if (err != GLEW_OK)
+        exit(1);
+
     audi = new Audio();
     audi->playEpica();
 
-    observer = new Observer();
+    //observer = new Observer();
 
 }
 

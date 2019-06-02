@@ -18,10 +18,16 @@
 
 #include "Menager.h"
 #include "Observer.h"
+#include "Shader.h"
 Menager menager;
 
 
 int main(int argc, char *argv[]) {
+
+    Shader shader;
+    shader.readVertexShaderSource();
+    std::cout << "xD\n";
+    shader.compileShader();
 
 //menager.loadObjects();
 

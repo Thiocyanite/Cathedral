@@ -22,14 +22,15 @@ class Observer
     glm::vec3 direction;
     glm::vec3 rightVector;
     glm::vec3 upVector;
-    glm::mat4 lookAt;
 
 public:
+    glm::mat4 perspectiveMatrix = glm::perspective(glm::radians(130.0f), 1.5f, 0.1f, 100.0f);
     Observer();
     virtual ~Observer();
     glm::mat4 calculateLookAtMatrix();
     void moveForward(float speed);
     void moveAside(float speed);
+    void rotate(glm::vec2 rot);
 };
 
 #endif //OPENGLSETUP_OBSERVER_H

@@ -37,3 +37,12 @@ void Observer::moveAside(float speed)
 {
     this->position + glm::normalize(glm::cross(center, upVector)) * speed;
 }
+
+void Observer::rotate(glm::vec2 rot)
+{
+    glm::mat4 matrix = glm::mat4(1.0f);
+    matrix = glm::rotate(matrix, rot.x, glm::vec3(0.0f, 1.0f, 0.0f));
+    matrix = glm::rotate(matrix, rot.y, glm::vec3(1.0f, 0.0f, 0.0f));
+    glm::vec4 direct = matrix * glm::vec4(0.0f, 0.0f, -1.0f, 1.0f);
+    center = position + glm::vec3(direct);
+}
