@@ -30,7 +30,7 @@ public:
         bool hasTexCords = assimpMesh->HasTextureCoords(0);
         bool hasNormals = assimpMesh->HasNormals();
         bool hasTex= assimpMesh->HasTextureCoords(0);
-        aiColor4D defaultColor(0.35f, 0.10f, 0.35f, 1.0f); //default purple
+        aiColor4D defaultColor(1.f, 0.5f, 1.f, 1.0f); //default purple
         aiVector3D defaultTexCoord = aiVector3D(0.0f, 0.0f, 0.0f);
         aiVector3D defaultNormal(0.0f, 0.0f, 1.0f);
 
@@ -58,6 +58,8 @@ public:
             loadedMesh->indicies.push_back( face.mIndices[1] );
             loadedMesh->indicies.push_back( face.mIndices[2] );
         }
+
+        loadedMesh->initVAO();
 
         return loadedMesh;
     }

@@ -22,19 +22,19 @@
 
 
 int main(int argc, char *argv[]) {
-
-
     if (!glfwInit()) {
         fprintf(stderr, "No GLFW 😢\n");
         exit(EXIT_FAILURE);
     }
+
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 1);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, true);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
     GLFWwindow* window;
     window = glfwCreateWindow(1920, 1080, "Cathedral", NULL, NULL);  //Creating a window in FullHD
 
-    if (!glewInit()){
-     std::cerr<<"No glew 🤯\n";
-     exit(EXIT_FAILURE);
-    }
     if (!window)
     {
         fprintf(stderr, "Even there's no Window[s], there's a problem 🤪 \n");
@@ -44,9 +44,17 @@ int main(int argc, char *argv[]) {
 
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1);
+    glEnable(GL_DEPTH_TEST);
+
+    const GLenum err = glewInit();
+
+    if (GLEW_OK != err) {
+        std::cout << "GLEW Error: " << glewGetErrorString(err) << std::endl;
+        exit(EXIT_FAILURE);
+    }
+
     Menager menager(window);
     menager.loadObjects();
 
-menager.mainloop();
-
+    menager.mainloop();
 }

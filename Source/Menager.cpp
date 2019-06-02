@@ -7,6 +7,7 @@
 #include <memory>
 #include <stdlib.h>
 #include <glm/glm.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 #include "Audio/Audio.h"
 #include "Observer.h"
@@ -17,7 +18,31 @@
 void Menager::DrawScene() {
     auto time = static_cast<float>(glfwGetTime());
     glClearColor(sin(time), cos(time), 0.f, 1.f);
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    int width, height;
+    glfwGetWindowSize(window, &width, &height);
+    float aspectRatio = (float)width/(float)height;
+
+    glm::mat4 M = glm::mat4(1);
+              M = glm::translate(M, glm::vec3(-2.f,-4.0f,-10.f) );
+              M = glm::rotate(M, (float)glfwGetTime(), glm::vec3(0,1,0));
+              M = glm::scale(M, glm::vec3(0.5f));
+    glm::mat4 V = glm::lookAt(glm::vec3( 0, 0, 0), // position
+                              glm::vec3( 0, 0,-1),
+                              glm::vec3( 0, 1, 0));
+    /* Draw from 0.1 to 10.f away from camera plane*/
+    glm::mat4 P = glm::perspective(glm::radians(45.f), aspectRatio, 0.1f, 100.f);
+    glm::mat4 MVP = P * V * M;
+
+    shader->use();
+    glUniformMatrix4fv(shader->getU("M"), 1, GL_FALSE, glm::value_ptr(M) );
+    glUniformMatrix4fv(shader->getU("MVP"), 1, GL_FALSE, glm::value_ptr(MVP) );
+    for(auto& mesh : cowboy->getMeshes()){
+        mesh->bindVAO();
+        glDrawElements(GL_TRIANGLES, mesh->indicies.size(), GL_UNSIGNED_INT, nullptr);
+    }
+    shader->unuse();
 
     glfwSwapBuffers(window);
 }
@@ -41,7 +66,7 @@ void Menager::key(){
 void Menager::loadObjects() {
 
     /*TEST ANIMATED OBJECT LOADING*/
-    auto animatedObj = objLoad.loadAnimation("Models/Cowboy/HowToLoad.txt");
+    cowboy = objLoad.loadAnimation("Models/Cowboy/HowToLoad.txt");
 
     /*TEST ANIMATED OBJECT LOADING*/
     std::fstream objects, parameters;
@@ -110,7 +135,7 @@ Menager::Menager(GLFWwindow* _window) {
     window=_window;
     glfwSetWindowUserPointer(window, this);
     shader=new Shader();
-    shader->loadProgram("vertexshader.glsl", "\0","fragmentshader.glsl");
+    shader->loadProgram("vertexshader.glsl", "","fragmentshader.glsl");
     audi = new Audio();
     audi->playEpica();
 
@@ -119,6 +144,10 @@ Menager::Menager(GLFWwindow* _window) {
 
 Menager::~Menager() {
     delete audi;
+    shader->freeProgram();
+    delete shader;
+
+
     glfwDestroyWindow(window);
     glfwTerminate();
     exit(EXIT_SUCCESS);

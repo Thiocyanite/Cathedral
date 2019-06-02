@@ -24,24 +24,27 @@
 #include <SDL2/SDL_mixer.h>
 #endif
 
+#include "Observer.h"
 #include "Object/ObjectMenager.h"
 #include "Object/ObjectLoader.h"
 #include "Audio/Audio.h"
 
 /* Those two */
-class Observer;
 class Shader;
 
 class Menager {
 private:
     Audio *audi; //Audio system
     GLFWwindow* window; //Main window
+
+    std::shared_ptr<AnimatedObject> cowboy;
+
     ObjectLoader objLoad;
     ObjectMenager stableObjects;
     std::vector<glm::vec3> positions;
     std::vector<glm::vec3> rotations;
     std::vector<glm::vec3> scales;
-    Observer *observer;
+    Observer *observer = new Observer();
     Shader *shader;
 
 public:

@@ -13,7 +13,7 @@ class Shader {
 private:
 
     std::string readFile( std::string path);
-    void loadShader(std::string path, GLuint ShaderType);
+    void loadShader(const std::string& path, GLuint ShaderType);
     GLuint programName = 0;
     int numShaders = 0;
     GLuint shaderNames[3] = {0,0,0};
@@ -22,8 +22,9 @@ private:
 public:
     void loadProgram(std::string vertex, std::string geometry,std::string fragment);
     void use(){ glUseProgram(programName); }
+    void unuse(){ glUseProgram(0); }
     void freeProgram();
-    GLint getU(const std::string uniformName);
+    GLint getU(const std::string &uniformName);
     Shader(){};
     ~Shader(){};
 };
