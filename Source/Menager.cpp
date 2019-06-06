@@ -28,20 +28,19 @@ void Menager::DrawScene() {
               M = glm::translate(M, glm::vec3(-2.f,-4.0f,-10.f) );
               M = glm::rotate(M, (float)glfwGetTime(), glm::vec3(0,1,0));
               M = glm::scale(M, glm::vec3(0.5f));
-    glm::mat4 V = glm::lookAt(glm::vec3( 0, 0, 0), // position
-                              glm::vec3( 0, 0,-1),
-                              glm::vec3( 0, 1, 0));
-    /* Draw from 0.1 to 10.f away from camera plane*/
+    glm::mat4 V = observer->calculateLookAtMatrix();
     glm::mat4 P = glm::perspective(glm::radians(45.f), aspectRatio, 0.1f, 100.f);
     glm::mat4 MVP = P * V * M;
 
     shader->use();
     glUniformMatrix4fv(shader->getU("M"), 1, GL_FALSE, glm::value_ptr(M) );
     glUniformMatrix4fv(shader->getU("MVP"), 1, GL_FALSE, glm::value_ptr(MVP) );
-    for(auto& mesh : cowboy->getMeshes()){
+
+    for(auto& mesh : stableObjects.getObject(0)->getMeshes()){
         mesh->bindVAO();
         glDrawElements(GL_TRIANGLES, mesh->indicies.size(), GL_UNSIGNED_INT, nullptr);
     }
+
     shader->unuse();
 
     glfwSwapBuffers(window);
@@ -66,7 +65,7 @@ void Menager::key(){
 void Menager::loadObjects() {
 
     /*TEST ANIMATED OBJECT LOADING*/
-    cowboy = objLoad.loadAnimation("Models/Cowboy/HowToLoad.txt");
+    //cowboy = objLoad.loadAnimation("Models/Cowboy/HowToLoad.txt");
 
     /*TEST ANIMATED OBJECT LOADING*/
     std::fstream objects, parameters;
