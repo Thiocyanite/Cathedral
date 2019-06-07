@@ -11,8 +11,13 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <stdlib.h>
 #include <stdio.h>
+#include <memory>
+
+class Object;
+class Menager;
 
 class Observer {
+private:
     glm::vec3 position;
     glm::vec3 center;
     glm::vec3 noseVector;
@@ -20,13 +25,16 @@ class Observer {
     glm::vec3 rightVector;
     glm::vec3 upVector;
     glm::mat4 lookAt;
+    std::shared_ptr<Object> character;
 
 public:
+    friend  class Menager;
     Observer();
     virtual ~Observer();
     glm::mat4 calculateLookAtMatrix();
     void moveForward(float speed);
     void moveAside(float speed);
+    void load_char(std::shared_ptr<Object> obj);
 };
 
 

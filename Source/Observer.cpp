@@ -3,6 +3,12 @@
 //
 
 #include "Observer.h"
+#include "Object/Object.h"
+
+void Observer::load_char(std::shared_ptr<Object> obj) {
+    character = obj;
+}
+
 Observer::Observer()
 {
     this->position = glm::vec3(0.0f, 0.0f, 3.0f);

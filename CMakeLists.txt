@@ -13,6 +13,7 @@ set(SOURCE_FILES Source/main.cpp
         Source/Object/ObjectLoader.h
         Source/Object/ObjectMenager.h
         Source/Object/Mesh.h
+        Source/Object/Mesh.cpp
         Source/Object/MeshLoader.h
         Source/Menager.h Source/Menager.cpp
         Source/Observer.h Source/Observer.cpp
@@ -22,7 +23,7 @@ set(SOURCE_FILES Source/main.cpp
         Source/Shader.cpp Source/Shader.h
         Source/Object/AnimatedObject.cpp Source/Object/AnimatedObject.h
         Source/Object/AnimatedObjectCreator.cpp Source/Object/AnimatedObjectCreator.h
-        Source/Object/ObjectCreationTools.cpp Source/Object/ObjectCreationTools.h)
+        Source/Object/ObjectCreationTools.cpp Source/Object/ObjectCreationTools.h Source/Object/Mesh.cpp)
 
 add_executable(OpenGlSetup ${SOURCE_FILES})
 

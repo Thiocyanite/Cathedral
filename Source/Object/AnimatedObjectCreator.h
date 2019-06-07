@@ -36,8 +36,11 @@ public:
 
         keyframes.clear();
 
+        animatedObject->initAnimationVAO();
+
         return animatedObject;
     }
 };
+
 
 #endif //OPENGLSETUP_ANIMATEDOBJECTCREATOR_H

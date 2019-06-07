@@ -26,7 +26,7 @@ void Menager::DrawScene() {
 
     glm::mat4 M = glm::mat4(1);
               M = glm::translate(M, glm::vec3(-2.f,-4.0f,-10.f) );
-              M = glm::rotate(M, (float)glfwGetTime(), glm::vec3(0,1,0));
+              //M = glm::rotate(M, time, glm::vec3(0,1,0));
               M = glm::scale(M, glm::vec3(0.5f));
     glm::mat4 V = observer->calculateLookAtMatrix();
     glm::mat4 P = glm::perspective(glm::radians(45.f), aspectRatio, 0.1f, 100.f);
@@ -41,6 +41,10 @@ void Menager::DrawScene() {
         glDrawElements(GL_TRIANGLES, mesh->indicies.size(), GL_UNSIGNED_INT, nullptr);
     }
 
+    for (auto& mesh : observer->character->getMeshes()){
+        mesh->bindVAO();
+        glDrawElements(GL_TRIANGLES, mesh->indicies.size(), GL_UNSIGNED_INT, nullptr);
+    }
     shader->unuse();
 
     glfwSwapBuffers(window);
@@ -64,10 +68,6 @@ void Menager::key(){
 #pragma ide diagnostic ignored "cert-err34-c"
 void Menager::loadObjects() {
 
-    /*TEST ANIMATED OBJECT LOADING*/
-    //cowboy = objLoad.loadAnimation("Models/Cowboy/HowToLoad.txt");
-
-    /*TEST ANIMATED OBJECT LOADING*/
     std::fstream objects, parameters;
 #ifdef _WIN32
     objects.open("Paths_for_retarded_OS.txt", std::ios::in); //Cause Windows have insane paths
@@ -85,7 +85,6 @@ void Menager::loadObjects() {
     std::string pathToObject, par[3];
     while (!objects.eof()){
         objects>>pathToObject;
-        //An empty file will load an empty string once
         if(!pathToObject.empty()){
             try{
                 loadingOne=objLoad.loadObject(pathToObject); //if the object is loaded, it's ok
@@ -114,6 +113,8 @@ void Menager::loadObjects() {
     }
     objects.close();
     parameters.close();
+    loadingOne=objLoad.loadObject("Models/woman/wmn.obj");
+
 }
 #pragma clang diagnostic pop /* Drop clang waring about atof not checking formatting. */
 

@@ -16,7 +16,7 @@
 #include "Mesh.h"
 class MeshLoader{
 public:
-    std::shared_ptr<Mesh> loadSingleMesh(aiMesh* assimpMesh){
+    std::shared_ptr<Mesh> loadSingleMesh(aiMesh *assimpMesh, bool initVAO = true) {
         if(assimpMesh == nullptr){
             std::cerr << "Tried to load not existing Mesh\n";
             exit(1);
@@ -59,7 +59,8 @@ public:
             loadedMesh->indicies.push_back( face.mIndices[2] );
         }
 
-        loadedMesh->initVAO();
+        if(initVAO)
+            loadedMesh->initVAO();
 
         return loadedMesh;
     }

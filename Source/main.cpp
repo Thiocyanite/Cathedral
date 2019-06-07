@@ -53,6 +53,10 @@ int main(int argc, char *argv[]) {
         exit(EXIT_FAILURE);
     }
 
+    glewInit();
+
+
+
     Menager menager(window);
     menager.loadObjects();
 

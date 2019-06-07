@@ -1,3 +1,5 @@
+#include <cmath>
+
 #include <utility>
 
 //
@@ -11,36 +13,45 @@
 #include <vector>
 
 #include "Object.h"
+#include "../Utility.h"
+
+
 class Mesh;
 
 class AnimatedObject : public Object {
     friend class ObjectCreator;
     friend class AnimatedObjectCreator;
 public:
+
+    AnimatedObject() = default;
+
+    void initAnimationVAO();
+
+    void sendDataToBufer(const std::shared_ptr<Mesh>& mesh1, const std::shared_ptr<Mesh>& mesh2);
+
+    virtual ~AnimatedObject();
+
+    float getInterpolationFactor(float timePassed);
+
+    void bindCurrentPose(float timePassed, int meshNum);
+
+    void unbind();
+
     struct Keyframe{
         float timeStamp;
         std::vector<std::shared_ptr<Mesh>> pose;
 
-        Keyframe(float timeStamp, std::vector<std::shared_ptr<Mesh>> pose) : timeStamp(timeStamp), pose(std::move(pose)) {}
+        Keyframe(float timeStamp, std::vector<std::shared_ptr<Mesh>> pose) : timeStamp(timeStamp), pose(std::move(pose)) {
+        }
+        virtual ~Keyframe() = default;
     };
 
-    void findCurrentPose(float* timePassed){
-        /*Trim the time to fit animation time*/
-        while(*timePassed > animationTime){
-            *timePassed = *timePassed - animationTime;
-        }
+    GLuint vao{0}, vbo[7]{0};
 
-        int lowerPoseId = static_cast<int>(*timePassed / keyframeDuration);
-        int upperPoseId = lowerPoseId + 1;
-        if (upperPoseId > keyframes.size()) upperPoseId = 0;
-
-        /*TODO: Bind both poses for drawing*/
-    }
-
-private:
     std::vector<Keyframe> keyframes;
-    float animationTime;
-    float keyframeDuration;
+private:
+    float animationTime{0};
+    float keyframeDuration{0};
 };
 
 
