@@ -6,10 +6,11 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/Modules/")
 message(WARNING CMAKE_MODULE_PATH : ${PROJECT_SOURCE_DIR}/Modules/)
 
-set(SOURCE_FILES Source/main.cpp
+set(SOURCE_FILES
+        Source/main.cpp
         Source/Audio/Audio.h Source/Audio/Audio.cpp
         Source/Object/Converter.h
-        Source/Object/Object.h
+
         Source/Object/ObjectLoader.h
         Source/Object/ObjectMenager.h
         Source/Object/Mesh.h
