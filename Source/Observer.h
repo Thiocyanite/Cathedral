@@ -19,12 +19,10 @@ class Menager;
 class Observer {
 private:
     glm::vec3 position;
-    glm::vec3 center;
-    glm::vec3 noseVector;
     glm::vec3 direction;
     glm::vec3 rightVector;
     glm::vec3 upVector;
-    glm::mat4 lookAt;
+    glm::vec3 thirdPersonOffset;
     std::shared_ptr<Object> character;
 
 public:

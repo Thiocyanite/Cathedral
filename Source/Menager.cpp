@@ -17,7 +17,7 @@
 
 void Menager::DrawScene() {
     auto time = static_cast<float>(glfwGetTime());
-    glClearColor(sin(time), cos(time), 0.f, 1.f);
+    glClearColor(0.0f, 0.05f, 0.2f, 1.f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
     int width, height;
@@ -29,20 +29,32 @@ void Menager::DrawScene() {
               //M = glm::rotate(M, time, glm::vec3(0,1,0));
               M = glm::scale(M, glm::vec3(0.5f));
     glm::mat4 V = observer->calculateLookAtMatrix();
-    glm::mat4 P = glm::perspective(glm::radians(45.f), aspectRatio, 0.1f, 100.f);
+    glm::mat4 P = glm::perspective(glm::radians(70.f), aspectRatio, 0.1f, 100.f);
     glm::mat4 MVP = P * V * M;
 
     shader->use();
-    glUniformMatrix4fv(shader->getU("M"), 1, GL_FALSE, glm::value_ptr(M) );
-    glUniformMatrix4fv(shader->getU("MVP"), 1, GL_FALSE, glm::value_ptr(MVP) );
 
+    int meshID = 0;
     for(auto& mesh : stableObjects.getObject(0)->getMeshes()){
         mesh->bindVAO();
+        M = glm::mat4(1);
+        M = glm::translate(M, positions[meshID]);
+        MVP = P * V * M;
+        glUniformMatrix4fv(shader->getU("M"), 1, GL_FALSE, glm::value_ptr(M) );
+        glUniformMatrix4fv(shader->getU("MVP"), 1, GL_FALSE, glm::value_ptr(MVP) );
+
         glDrawElements(GL_TRIANGLES, mesh->indicies.size(), GL_UNSIGNED_INT, nullptr);
     }
 
     for (auto& mesh : observer->character->getMeshes()){
         mesh->bindVAO();
+
+        M = glm::mat4(1);
+        M = glm::translate(M, observer->position);
+        MVP = P * V * M;
+        glUniformMatrix4fv(shader->getU("M"), 1, GL_FALSE, glm::value_ptr(M) );
+        glUniformMatrix4fv(shader->getU("MVP"), 1, GL_FALSE, glm::value_ptr(MVP) );
+
         glDrawElements(GL_TRIANGLES, mesh->indicies.size(), GL_UNSIGNED_INT, nullptr);
     }
     shader->unuse();
@@ -113,8 +125,8 @@ void Menager::loadObjects() {
     }
     objects.close();
     parameters.close();
-    loadingOne=objLoad.loadObject("Models/woman/wmn.obj");
-
+    loadingOne=objLoad.loadObject("Models/woman/woman.obj");
+    observer->load_char(loadingOne);
 }
 #pragma clang diagnostic pop /* Drop clang waring about atof not checking formatting. */
 

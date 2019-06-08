@@ -11,12 +11,11 @@ void Observer::load_char(std::shared_ptr<Object> obj) {
 
 Observer::Observer()
 {
-    this->position = glm::vec3(0.0f, 0.0f, 3.0f);
-    this->center = glm::vec3(0.0f, 0.0f, -1.0f);
-    this->direction = glm::normalize(position - center);
-    this->noseVector = glm::vec3(0.0f, 1.0f, 0.0f);
-    this->rightVector = glm::normalize(glm::cross(noseVector, center));
-    this->upVector = glm::cross(direction, rightVector);
+    position = glm::vec3(0.0f, 0.0f, 3.0f);
+    thirdPersonOffset = glm::vec3(0.0f, -2.0f, -1.0f);
+    direction = glm::vec3(0.0f,0.0f, 3.0f);
+    upVector = glm::vec3(0.0f, 1.0f, 0.0f);
+    rightVector = glm::normalize(glm::cross(direction, upVector));
 }
 
 Observer::~Observer()
@@ -27,19 +26,19 @@ Observer::~Observer()
 glm::mat4 Observer::calculateLookAtMatrix()
 {
     glm::mat4 V = glm::lookAt(
-            this->position,
-            this->center,
-            this->noseVector);
+            position + glm::vec3(0,2.5, 0) - direction,
+            position + direction,
+            upVector);
     return V;
 }
 
 void Observer::moveForward(float speed)
 {
-    this->position += this->center * speed;
+    position += direction * speed;
 
 }
 
 void Observer::moveAside(float speed)
 {
-    this->position + glm::normalize(glm::cross(center, upVector)) * speed;
+    position += rightVector * speed;
 }
