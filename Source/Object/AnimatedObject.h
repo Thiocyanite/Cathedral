@@ -12,13 +12,13 @@
 #include <memory>
 #include <vector>
 
-#include "Object.h"
+#include "Model.h"
 #include "../Utility.h"
 
 
 class Mesh;
 
-class AnimatedObject : public Object {
+class AnimatedObject : public Model {
     friend class ObjectCreator;
     friend class AnimatedObjectCreator;
 public:

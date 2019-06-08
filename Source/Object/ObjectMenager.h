@@ -7,18 +7,18 @@
 
 #include <map>
 #include <vector>
-#include "Object.h"
+#include "Model.h"
 #include <glm/glm.hpp>
 class ObjectMenager {
 private:
-    std::vector<std::shared_ptr<Object>> allObjects;
+    std::vector<std::shared_ptr<Model>> allObjects;
 public:
-    void addObject(std::shared_ptr<Object> object){
+    void addObject(std::shared_ptr<Model> object){
         allObjects.push_back(object);
     }
 
 
-    std::shared_ptr<Object> getObject(int id) const {
+    std::shared_ptr<Model> getObject(int id) const {
         return  allObjects.at(id);
     }
 

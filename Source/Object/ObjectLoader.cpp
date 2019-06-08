@@ -7,7 +7,7 @@
 #include "ObjectLoader.h"
 
 #include "Mesh.h"
-#include "Object.h"
+#include "Model.h"
 #include "AnimatedObject.h"
 
 #include "AnimatedObjectCreator.h"
@@ -15,7 +15,7 @@
 
 #include "../Utility.h"
 
-std::shared_ptr<Object> ObjectLoader::loadObject( const std::string &path ) {
+std::shared_ptr<Model> ObjectLoader::loadObject( const std::string &path ) {
     ObjectCreator objectCreator;
 
     directory = getFileDir(path);

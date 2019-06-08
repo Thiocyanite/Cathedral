@@ -6,7 +6,7 @@
 #define OPENGLSETUP_OBJECTCREATIONTOOLS_H
 
 
-#include "Object.h"
+#include "Model.h"
 
 class ObjectCreationTools {
 
@@ -17,7 +17,7 @@ protected:
     template<class Type>
     std::shared_ptr<Type> innerMake(){
         std::shared_ptr<Type> returnObject= std::make_shared<Type>();
-        if (!isMesh) //Object has to have at least one mesh
+        if (!isMesh) //Model has to have at least one mesh
         {
             std::cerr << "There is no mesh to create a model 😤\n ";
             throw false;
@@ -29,7 +29,7 @@ protected:
     }
 
 public:
-    inline void AddMesh(const std::shared_ptr<Mesh>& mesh){ //because Object can have few meshes
+    inline void AddMesh(const std::shared_ptr<Mesh>& mesh){ //because Model can have few meshes
         meshes.push_back(mesh);
         isMesh = true;
     }

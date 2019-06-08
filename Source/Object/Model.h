@@ -8,13 +8,13 @@
 #include <iostream>
 #include <memory>
 
-class Object{
+class Model{
     friend class ObjectCreationTools;
     friend class AnimatedObjectCreator;
 private:
-    std::vector<std::shared_ptr<Mesh>> meshes; //Object is a group of meshes
+    std::vector<std::shared_ptr<Mesh>> meshes; //Model is a group of meshes
 public:
-    Object() = default;
+    Model() = default;
 
     const std::vector<std::shared_ptr<Mesh>> &getMeshes() const {
         return meshes;

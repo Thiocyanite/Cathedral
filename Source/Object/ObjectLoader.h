@@ -12,18 +12,18 @@
 #include <assimp/postprocess.h>
 
 #include "MeshLoader.h"
-#include "Object.h"
+#include "Model.h"
 #include "ObjectLoader.h"
 #include "../Utility.h"
 #include "ObjectCreationTools.h"
 #include "AnimatedObjectCreator.h"
 
-class Object;
+class Model;
 class AnimatedObject;
 
 class ObjectLoader {
 public:
-    std::shared_ptr<Object> loadObject(const std::string &path);
+    std::shared_ptr<Model> loadObject(const std::string &path);
     std::shared_ptr<AnimatedObject> loadAnimation(const std::string &path);
 private:
     inline static const aiScene* scene;

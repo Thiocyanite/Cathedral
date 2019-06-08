@@ -6,7 +6,7 @@
 #define OPENGLSETUP_ANIMATEDOBJECTCREATOR_H
 
 
-#include "Object.h"
+#include "Model.h"
 #include "AnimatedObject.h"
 #include "Mesh.h"
 #include "ObjectCreationTools.h"

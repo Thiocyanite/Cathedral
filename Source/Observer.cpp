@@ -3,9 +3,9 @@
 //
 
 #include "Observer.h"
-#include "Object/Object.h"
+#include "Object/Model.h"
 
-void Observer::load_char(std::shared_ptr<Object> obj) {
+void Observer::load_char(std::shared_ptr<Model> obj) {
     character = obj;
 }
 

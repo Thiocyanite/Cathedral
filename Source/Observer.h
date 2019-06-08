@@ -13,7 +13,7 @@
 #include <stdio.h>
 #include <memory>
 
-class Object;
+class Model;
 class Menager;
 
 class Observer {
@@ -23,7 +23,7 @@ private:
     glm::vec3 rightVector;
     glm::vec3 upVector;
     glm::vec3 thirdPersonOffset;
-    std::shared_ptr<Object> character;
+    std::shared_ptr<Model> character;
 
 public:
     friend  class Menager;
@@ -32,7 +32,7 @@ public:
     glm::mat4 calculateLookAtMatrix();
     void moveForward(float speed);
     void moveAside(float speed);
-    void load_char(std::shared_ptr<Object> obj);
+    void load_char(std::shared_ptr<Model> obj);
 };
 
 

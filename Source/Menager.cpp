@@ -92,7 +92,7 @@ void Menager::loadObjects() {
         std::cerr<<"Couldn't open one of the important files 😫\n";
         exit(0);
     }
-    std::shared_ptr<Object> loadingOne;
+    std::shared_ptr<Model> loadingOne;
     glm::vec3 loadingParamether;
     std::string pathToObject, par[3];
     while (!objects.eof()){

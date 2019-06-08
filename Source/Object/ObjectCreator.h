@@ -5,15 +5,15 @@
 #ifndef OPENGLSETUP_OBJECTCREATOR_H
 #define OPENGLSETUP_OBJECTCREATOR_H
 
-#include "Object.h"
+#include "Model.h"
 #include "ObjectCreationTools.h"
 
 class ObjectCreator : public  ObjectCreationTools{
 public:
 
-    inline std::shared_ptr<Object> make() { return ObjectCreationTools::innerMake<Object>(); }
+    inline std::shared_ptr<Model> make() { return ObjectCreationTools::innerMake<Model>(); }
 };
 
-#include "Object.h"
+#include "Model.h"
 
 #endif //OPENGLSETUP_OBJECTCREATOR_H
