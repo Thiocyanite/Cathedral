@@ -34,18 +34,18 @@ void Menager::DrawScene() {
 
     shader->use();
 
-    int meshID = 0;
-    for(auto& mesh : stableObjects.getObject(0)->getMeshes()){
-        mesh->bindVAO();
-        M = glm::mat4(1);
-        M = glm::translate(M, positions[meshID]);
-        MVP = P * V * M;
-        glUniformMatrix4fv(shader->getU("M"), 1, GL_FALSE, glm::value_ptr(M) );
-        glUniformMatrix4fv(shader->getU("MVP"), 1, GL_FALSE, glm::value_ptr(MVP) );
+    for (int meshID=0; meshID<stableObjects.size(); meshID++) {
+        for (auto &mesh : stableObjects.getObject(0)->getMeshes()) {
+            mesh->bindVAO();
+            M = glm::mat4(1);
+            M = glm::translate(M, positions[meshID]);
+            MVP = P * V * M;
+            glUniformMatrix4fv(shader->getU("M"), 1, GL_FALSE, glm::value_ptr(M));
+            glUniformMatrix4fv(shader->getU("MVP"), 1, GL_FALSE, glm::value_ptr(MVP));
 
-        glDrawElements(GL_TRIANGLES, mesh->indicies.size(), GL_UNSIGNED_INT, nullptr);
+            glDrawElements(GL_TRIANGLES, mesh->indicies.size(), GL_UNSIGNED_INT, nullptr);
+        }
     }
-
     for (auto& mesh : observer->character->getMeshes()){
         mesh->bindVAO();
 

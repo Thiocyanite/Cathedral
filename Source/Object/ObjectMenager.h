@@ -17,7 +17,7 @@ public:
         allObjects.push_back(object);
     }
 
-
+    int size(){return allObjects.size();};
     std::shared_ptr<Model> getObject(int id) const {
         return  allObjects.at(id);
     }
