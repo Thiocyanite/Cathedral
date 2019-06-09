@@ -26,6 +26,7 @@ public:
     glm::vec3 getPosition(int id);
     glm::vec3 getRotation(int id);
     glm::vec3 getScale(int id);
+    int size(){ return model.size();};
 };
 
 

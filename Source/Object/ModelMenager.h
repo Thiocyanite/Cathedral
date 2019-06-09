@@ -2,8 +2,8 @@
 // Created by Julia on 2019-05-07.
 //
 
-#ifndef OPENGLSETUP_OBJECTMENAGER_H
-#define OPENGLSETUP_OBJECTMENAGER_H
+#ifndef OPENGLSETUP_MODELMENAGER_H
+#define OPENGLSETUP_MODELMENAGER_H
 
 #include <map>
 #include <vector>

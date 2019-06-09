@@ -33,11 +33,11 @@ void Menager::DrawScene() {
 
     shader->use();
 
-    for (int meshID=0; meshID<stableObjects.size(); meshID++) {
-        for (auto &mesh : stableObjects.getObject(0)->getMeshes()) {
+    for (int meshID=0; meshID<obj.size(); meshID++) {
+        for (auto &mesh : obj.getModel(meshID)->getMeshes()) {
             mesh->bindVAO();
             M = glm::mat4(1);
-            M = glm::translate(M, positions[meshID]);
+            M = glm::translate(M, obj.getPosition(meshID));
             MVP = P * V * M;
             glUniformMatrix4fv(shader->getU("M"), 1, GL_FALSE, glm::value_ptr(M));
             glUniformMatrix4fv(shader->getU("MVP"), 1, GL_FALSE, glm::value_ptr(MVP));
@@ -99,23 +99,19 @@ void Menager::loadObjects() {
         if(!pathToObject.empty()){
             try{
                 loadingOne=objLoad.loadObject(pathToObject); //if the object is loaded, it's ok
-                stableObjects.addObject(loadingOne);
 
-                for (auto &i : par)
-                     parameters >> i;
+                for (int i=0; i<3; i++)
+                     parameters >> par[i];
                 loadingPos=glm::vec3(atof(par[0].c_str()), atof(par[1].c_str()), atof(par[3].c_str()) );
-                positions.emplace_back(loadingPos);
 
-                for (auto &i : par)
-                    parameters >> i;
+                for (int i=0; i<3; i++)
+                    parameters >> par[i];
                 loadingRot=glm::vec3(atof(par[0].c_str()), atof(par[1].c_str()), atof(par[3].c_str()) );
-                rotations.emplace_back(loadingRot);
 
-                for (auto &i : par)
-                    parameters >> i;
+                for (int i=0; i<3; i++)
+                    parameters >> par[i];
                 loadingScale=glm::vec3(atof(par[0].c_str()), atof(par[1].c_str()), atof(par[3].c_str()) );
-                scales.emplace_back(loadingScale);
-                //obj.addObject(loadingOne, loadingPos, loadingRot,loadingScale);
+                obj.addObject(loadingOne, loadingPos, loadingRot,loadingScale);
             }
             catch (...){
                 for (int i=0;i<9;i++){
