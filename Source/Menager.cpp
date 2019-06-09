@@ -94,24 +94,29 @@ void Menager::loadObjects() {
     std::shared_ptr<Model> loadingOne;
     glm::vec3 loadingPos, loadingRot, loadingScale;
     std::string pathToObject, par[3];
+    int numberOfItems;
     while (!objects.eof()){
         objects>>pathToObject;
         if(!pathToObject.empty()){
             try{
+
                 loadingOne=objLoad.loadObject(pathToObject); //if the object is loaded, it's ok
+                parameters>>numberOfItems;
+                for (int j=0; j<numberOfItems;j++)
+                {
+                    for (int i = 0; i < 3; i++)
+                        parameters >> par[i];
+                    loadingPos = glm::vec3(atof(par[0].c_str()), atof(par[1].c_str()), atof(par[3].c_str()));
 
-                for (int i=0; i<3; i++)
-                     parameters >> par[i];
-                loadingPos=glm::vec3(atof(par[0].c_str()), atof(par[1].c_str()), atof(par[3].c_str()) );
+                    for (int i = 0; i < 3; i++)
+                        parameters >> par[i];
+                    loadingRot = glm::vec3(atof(par[0].c_str()), atof(par[1].c_str()), atof(par[3].c_str()));
 
-                for (int i=0; i<3; i++)
-                    parameters >> par[i];
-                loadingRot=glm::vec3(atof(par[0].c_str()), atof(par[1].c_str()), atof(par[3].c_str()) );
-
-                for (int i=0; i<3; i++)
-                    parameters >> par[i];
-                loadingScale=glm::vec3(atof(par[0].c_str()), atof(par[1].c_str()), atof(par[3].c_str()) );
-                obj.addObject(loadingOne, loadingPos, loadingRot,loadingScale);
+                    for (int i = 0; i < 3; i++)
+                        parameters >> par[i];
+                    loadingScale = glm::vec3(atof(par[0].c_str()), atof(par[1].c_str()), atof(par[3].c_str()));
+                    obj.addObject(loadingOne, loadingPos, loadingRot, loadingScale);
+                }
             }
             catch (...){
                 for (int i=0;i<9;i++){
