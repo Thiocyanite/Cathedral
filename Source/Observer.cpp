@@ -34,11 +34,17 @@ glm::mat4 Observer::calculateLookAtMatrix()
 
 void Observer::moveForward(float speed)
 {
-    position += direction * speed;
+    if ((speed>0 && maxZ<=position.z)|| speed<0 && minZ>=position.z)
+        std::cout<<"I can't go farther\n";
+    else
+        position += direction * speed;
 
 }
 
 void Observer::moveAside(float speed)
 {
+    if ((speed<0 && maxX<=position.x) || (speed>0 && minX>=position.x))
+        std::cout<<"I can't go farther\n";
+    else
     position += rightVector * speed;
 }

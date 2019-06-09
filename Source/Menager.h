@@ -25,9 +25,11 @@
 #endif
 
 #include "Observer.h"
-#include "Object/ObjectMenager.h"
+#include "Object/ModelMenager.h"
 #include "Object/ObjectLoader.h"
 #include "Audio/Audio.h"
+#include "Object/ObjectMenager.h"
+
 
 /* Those two */
 class Shader;
@@ -38,12 +40,12 @@ private:
     GLFWwindow* window; //Main window
 
     std::shared_ptr<AnimatedObject> cowboy;
-
     ObjectLoader objLoad;
-    ObjectMenager stableObjects;
+    ModelMenager stableObjects;
     std::vector<glm::vec3> positions;
     std::vector<glm::vec3> rotations;
     std::vector<glm::vec3> scales;
+    //ObjectMenager obj;
     Observer *observer = new Observer();
     Shader *shader;
 
@@ -58,6 +60,7 @@ public:
     void DrawScene();
     void key();
 };
+
 
 
 #endif //OPENGLSETUP_MENAGER_H

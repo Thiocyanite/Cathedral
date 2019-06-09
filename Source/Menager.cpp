@@ -12,7 +12,6 @@
 #include "Audio/Audio.h"
 #include "Observer.h"
 #include "Shader.h"
-
 #include "Object/AnimatedObject.h"
 
 void Menager::DrawScene() {
@@ -93,7 +92,7 @@ void Menager::loadObjects() {
         exit(0);
     }
     std::shared_ptr<Model> loadingOne;
-    glm::vec3 loadingParamether;
+    glm::vec3 loadingPos, loadingRot, loadingScale;
     std::string pathToObject, par[3];
     while (!objects.eof()){
         objects>>pathToObject;
@@ -104,18 +103,19 @@ void Menager::loadObjects() {
 
                 for (auto &i : par)
                      parameters >> i;
-
-                positions.emplace_back(atof(par[0].c_str()), atof(par[1].c_str()), atof(par[3].c_str()) );
-
-                for (auto &i : par)
-                    parameters >> i;
-
-                rotations.emplace_back(atof(par[0].c_str()), atof(par[1].c_str()), atof(par[3].c_str()) );
+                loadingPos=glm::vec3(atof(par[0].c_str()), atof(par[1].c_str()), atof(par[3].c_str()) );
+                positions.emplace_back(loadingPos);
 
                 for (auto &i : par)
                     parameters >> i;
+                loadingRot=glm::vec3(atof(par[0].c_str()), atof(par[1].c_str()), atof(par[3].c_str()) );
+                rotations.emplace_back(loadingRot);
 
-                scales.emplace_back(atof(par[0].c_str()), atof(par[1].c_str()), atof(par[3].c_str()) );
+                for (auto &i : par)
+                    parameters >> i;
+                loadingScale=glm::vec3(atof(par[0].c_str()), atof(par[1].c_str()), atof(par[3].c_str()) );
+                scales.emplace_back(loadingScale);
+                //obj.addObject(loadingOne, loadingPos, loadingRot,loadingScale);
             }
             catch (...){
                 for (int i=0;i<9;i++){
