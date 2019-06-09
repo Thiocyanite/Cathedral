@@ -116,6 +116,12 @@ void Menager::loadObjects() {
                         parameters >> par[i];
                     loadingScale = glm::vec3(atof(par[0].c_str()), atof(par[1].c_str()), atof(par[3].c_str()));
                     obj.addObject(loadingOne, loadingPos, loadingRot, loadingScale);
+                    /*For every model:
+                     * numbers of objects using this model
+                     * position (3 numbers) rotation(3 numbers) scale(3 numbers) of first object
+                     * for the second one the same... and for the last one
+                     * numbers of objects using next model...
+                     */
                 }
             }
             catch (...){

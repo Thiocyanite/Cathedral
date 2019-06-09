@@ -34,7 +34,7 @@ glm::mat4 Observer::calculateLookAtMatrix()
 
 void Observer::moveForward(float speed)
 {
-    if ((speed>0 && maxZ<=position.z)|| speed<0 && minZ>=position.z)
+    if ((speed>0 && maxZ<=position.z)|| speed<0 && minZ>=position.z) //now we are inside a rectangle (later this will be use for collision with walls
         std::cout<<"I can't go farther\n";
     else
         position += direction * speed;
@@ -43,7 +43,7 @@ void Observer::moveForward(float speed)
 
 void Observer::moveAside(float speed)
 {
-    if ((speed<0 && maxX<=position.x) || (speed>0 && minX>=position.x))
+    if ((speed<0 && maxX<=position.x) || (speed>0 && minX>=position.x)) //same as in moveForard
         std::cout<<"I can't go farther\n";
     else
     position += rightVector * speed;
