@@ -19,5 +19,18 @@ public:
     std::vector<unsigned int> indicies;
     Mesh(){};
     ~Mesh(){};
+
+    void rotate(float angle) {
+        for (auto position : pos) {
+            position.x = position.x * glm::cos(glm::radians(angle)) - position.z * glm::sin(glm::radians(angle));
+            position.z = position.x * glm::sin(glm::radians(angle)) + position.z * glm::cos(glm::radians(angle));
+        }
+    }
+
+    void scale(float scale) {
+        for (auto position : pos) {
+            position *= scale;
+        }
+    }
 };
 #endif //OPENGLSETUP_MESH_H

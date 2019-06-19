@@ -20,6 +20,18 @@ public:
         return meshes;
     }
 
+    void rotate(float angle) {
+        for (auto mesh : meshes) {
+            mesh->rotate(angle);
+        }
+    }
+
+    void scale(float scale) {
+        for (auto mesh : meshes) {
+            mesh->scale(scale);
+        }
+    }
+
 };
 
 

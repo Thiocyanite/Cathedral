@@ -14,12 +14,14 @@
 
 class Observer {
     glm::vec3 position;
-    glm::vec3 center;
     glm::vec3 noseVector;
     glm::vec3 direction;
     glm::vec3 rightVector;
     glm::vec3 upVector;
-    glm::mat4 lookAt;
+    glm::vec3 front;
+    glm::vec3 cameraFront;
+    float pitch;
+    float yaw;
 
 public:
     Observer();
@@ -27,6 +29,8 @@ public:
     glm::mat4 calculateLookAtMatrix();
     void moveForward(float speed);
     void moveAside(float speed);
+    void lookAround(float xRotate, float yRotate);
+    void updateFront();
 };
 
 

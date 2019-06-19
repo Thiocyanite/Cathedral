@@ -32,6 +32,14 @@ void Menager::key(){
         observer->moveAside(-0.05);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         observer->moveAside(0.05);
+    if (glfwGetKey(window, GLFW_KEY_U) == GLFW_PRESS)
+        observer->lookAround(0.1, 0.0);
+    if (glfwGetKey(window, GLFW_KEY_H) == GLFW_PRESS)
+        observer->lookAround(-0.1, 0.0);
+    if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS)
+        observer->lookAround(0.0, 0.1);
+    if (glfwGetKey(window, GLFW_KEY_K) == GLFW_PRESS)
+        observer->lookAround(0.0, -0.1);
 }
 
 
