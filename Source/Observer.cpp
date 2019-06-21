@@ -3,44 +3,40 @@
 //
 
 #include "Observer.h"
-Observer::Observer()
-{
-    this->position = glm::vec3(0.0f, 0.0f, 3.0f);
-    this->cameraFront = glm::vec3(0.0f, 0.0f, 1.0f);
-    this->direction = glm::normalize(position - cameraFront);
-    this->noseVector = glm::vec3(0.0f, 1.0f, 0.0f);
-    this->rightVector = glm::normalize(glm::cross(noseVector, cameraFront));
-    this->upVector = glm::cross(direction, rightVector);
-
+void Observer::load_char(std::shared_ptr<Object> obj) {
+    character = obj;
 }
 
-Observer::~Observer()
-{
+Observer::Observer() {
+    position = glm::vec3(0.0f, 0.0f, 3.0f);
+    thirdPersonOffset = glm::vec3(0.0f, -2.0f, -1.0f);
+    direction = glm::vec3(0.0f, 0.0f, 1.0f);
+    upVector = glm::vec3(0.0f, 1.0f, 0.0f);
+    rightVector = glm::normalize(glm::cross(direction, upVector));
+}
+
+Observer::~Observer() {
     //dtor
 }
 
-glm::mat4 Observer::calculateLookAtMatrix()
-{
+glm::mat4 Observer::calculateLookAtMatrix() {
     glm::mat4 V = glm::lookAt(
-            position,
-            position + cameraFront,
-            noseVector);
+            position + glm::vec3(0.0f, 2.5f, 0.0f) - direction,
+            position + direction,
+            upVector);
     return V;
 }
 
-void Observer::moveForward(float speed)
-{
-    this->position += this->cameraFront * speed;
+void Observer::moveForward(float speed) {
+    position += cameraFront * speed;
 
 }
 
-void Observer::moveAside(float speed)
-{
-    this->position + glm::normalize(glm::cross(cameraFront, upVector)) * speed;
+void Observer::moveAside(float speed) {
+    position + glm::normalize(glm::cross(cameraFront, upVector)) * speed;
 }
 
-void Observer::lookAround(float xRotate, float yRotate)
-{
+void Observer::lookAround(float xRotate, float yRotate) {
     pitch += xRotate;
     yaw += yRotate;
     if (pitch > 89.0f)
@@ -50,10 +46,9 @@ void Observer::lookAround(float xRotate, float yRotate)
     updateFront();
 }
 
-void Observer::updateFront()
-{
+void Observer::updateFront() {
     front.x = cos(glm::radians(pitch)) * cos(glm::radians(yaw));
     front.y = sin(glm::radians(pitch));
     front.z = cos(glm::radians(pitch)) * sin(glm::radians(yaw));
-    cameraFront = glm::normalize(front);
+    direction = glm::normalize(front);
 }
