@@ -14,6 +14,7 @@
 #include "assimp/scene.h"
 #include "Converter.h"
 #include "Mesh.h"
+#include "../lodepng.h"
 class MeshLoader{
 public:
     std::shared_ptr<Mesh> loadSingleMesh(aiMesh *assimpMesh, bool initVAO = true) {
@@ -38,12 +39,13 @@ public:
             aiVector3D* positions = &assimpMesh->mVertices[i];
             bool tex=hasTexCords;
             aiColor4D* colors    = hasColors   ? assimpMesh->mColors[i]         : & defaultColor;
-            //aiVector3D* texCords = hasTexCords ? assimpMesh->mTextureCoords[i] : & defaultTexCoord;
+            aiVector3D* texCords = hasTexCords ? assimpMesh->mTextureCoords[i] : & defaultTexCoord;
             aiVector3D* normals  = hasNormals  ? & assimpMesh->mNormals[i]     : & defaultNormal;
             loadedMesh->texCords.push_back(glmCast(defaultTexCoord));
             loadedMesh->pos.push_back( glmCast(*positions) ); //setting  parameters
             loadedMesh->col.push_back( glmCast(*colors) );
             loadedMesh->normals.push_back( glmCast(*normals) );
+
         }
 
         for(unsigned int i = 0; i < numFaces; i++){

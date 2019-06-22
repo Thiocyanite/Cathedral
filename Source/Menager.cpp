@@ -8,11 +8,12 @@
 #include <stdlib.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/type_ptr.hpp>
+#include "lodepng.h"
 
 #include "Audio/Audio.h"
 #include "Observer.h"
-#include "Shader.h"
 #include "Object/AnimatedObject.h"
+#include "glCall.h"
 
 void Menager::DrawScene() {
     auto time = static_cast<float>(glfwGetTime());
@@ -31,33 +32,37 @@ void Menager::DrawScene() {
     glm::mat4 P = glm::perspective(glm::radians(70.f), aspectRatio, 0.1f, 100.f);
     glm::mat4 MVP = P * V * M;
 
-    shader->use();
+    //shaderTextured.use();
+    //testMat->bind();
+    //glUniform1i(shaderTextured.getU("colorMap"), 1);
 
+    shader.use();
     for (int meshID=0; meshID<obj.size(); meshID++) {
         for (auto &mesh : obj.getModel(meshID)->getMeshes()) {
             mesh->bindVAO();
             M = glm::mat4(1);
             M = glm::translate(M, obj.getPosition(meshID));
             MVP = P * V * M;
-            glUniformMatrix4fv(shader->getU("M"), 1, GL_FALSE, glm::value_ptr(M));
-            glUniformMatrix4fv(shader->getU("MVP"), 1, GL_FALSE, glm::value_ptr(MVP));
+            glCall( glUniformMatrix4fv(shader.getU("M"), 1, GL_FALSE, glm::value_ptr(M)) );
+            glCall( glUniformMatrix4fv(shader.getU("MVP"), 1, GL_FALSE, glm::value_ptr(MVP)) );
 
-            glDrawElements(GL_TRIANGLES, mesh->indicies.size(), GL_UNSIGNED_INT, nullptr);
+            glCall( glDrawElements(GL_TRIANGLES, mesh->indicies.size(), GL_UNSIGNED_INT, nullptr) );
         }
     }
+    int x;
     for (auto& mesh : observer->character->getMeshes()){
         mesh->bindVAO();
 
         M = glm::mat4(1);
         M = glm::translate(M, observer->position);
         MVP = P * V * M;
-        glUniformMatrix4fv(shader->getU("M"), 1, GL_FALSE, glm::value_ptr(M) );
-        glUniformMatrix4fv(shader->getU("MVP"), 1, GL_FALSE, glm::value_ptr(MVP) );
+        glUniformMatrix4fv(shader.getU("M"), 1, GL_FALSE, glm::value_ptr(M) );
+        glUniformMatrix4fv(shader.getU("MVP"), 1, GL_FALSE, glm::value_ptr(MVP) );
 
         glDrawElements(GL_TRIANGLES, mesh->indicies.size(), GL_UNSIGNED_INT, nullptr);
     }
-    shader->unuse();
-
+    //shaderTextured.unuse();
+    shader.unuse();
     glfwSwapBuffers(window);
 }
 
@@ -116,12 +121,7 @@ void Menager::loadObjects() {
                         parameters >> par[i];
                     loadingScale = glm::vec3(atof(par[0].c_str()), atof(par[1].c_str()), atof(par[3].c_str()));
                     obj.addObject(loadingOne, loadingPos, loadingRot, loadingScale);
-                    /*For every model:
-                     * numbers of objects using this model
-                     * position (3 numbers) rotation(3 numbers) scale(3 numbers) of first object
-                     * for the second one the same... and for the last one
-                     * numbers of objects using next model...
-                     */
+
                 }
             }
             catch (...){
@@ -134,6 +134,8 @@ void Menager::loadObjects() {
     parameters.close();
     loadingOne=objLoad.loadObject("Models/woman/woman.obj");
     observer->load_char(loadingOne);
+
+    testMat = materialLoader.load("Textures/Mat1.mat");
 }
 #pragma clang diagnostic pop /* Drop clang waring about atof not checking formatting. */
 
@@ -153,19 +155,20 @@ void Menager::mainloop() {
 Menager::Menager(GLFWwindow* _window) {
     window=_window;
     glfwSetWindowUserPointer(window, this);
-    shader=new Shader();
-    shader->loadProgram("vertexshader.glsl", "","fragmentshader.glsl");
+
+    shader.loadProgram("Shaders/vertex.glsl", "","Shaders/fragment.glsl");
+
+    shaderTextured.loadProgram("Shaders/vertex.glsl", "","Shaders/fragmentTextured.glsl");
+
     audi = new Audio();
     audi->playEpica();
+    testMat= std::make_shared<Material>();
 
 }
 
 
 Menager::~Menager() {
     delete audi;
-    shader->freeProgram();
-    delete shader;
-
 
     glfwDestroyWindow(window);
     glfwTerminate();

@@ -11,6 +11,7 @@ set(SOURCE_FILES
         Source/Audio/Audio.h Source/Audio/Audio.cpp
         Source/Object/Converter.h
 
+        Source/Object/stb_image.h
         Source/Object/ObjectLoader.h
         Source/Object/ModelMenager.h
         Source/Object/Mesh.h
@@ -26,7 +27,7 @@ set(SOURCE_FILES
         Source/Object/AnimatedObjectCreator.cpp Source/Object/AnimatedObjectCreator.h
         Source/Object/ObjectCreationTools.cpp Source/Object/ObjectCreationTools.h
         Source/Object/Mesh.cpp Source/Object/ObjectMenager.cpp
-        Source/Object/ObjectMenager.h Source/Object/ObjectMenager.cpp)
+        Source/Object/ObjectMenager.h Source/Object/ObjectMenager.cpp Source/Object/Material.cpp Source/Object/Material.h Source/Object/MaterialLoader.cpp Source/Object/MaterialLoader.h)
 
 add_executable(OpenGlSetup ${SOURCE_FILES})
 

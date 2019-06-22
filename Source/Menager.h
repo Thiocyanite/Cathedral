@@ -28,12 +28,10 @@
 #include "Observer.h"
 #include "Object/ModelMenager.h"
 #include "Object/ObjectLoader.h"
+#include "Object/Material.h"
+#include "Object/MaterialLoader.h"
 #include "Audio/Audio.h"
-
-
-
-/* Those two */
-class Shader;
+#include "Shader.h"
 
 class Menager {
 private:
@@ -41,10 +39,13 @@ private:
     GLFWwindow* window; //Main window
     //std::shared_ptr<AnimatedObject> cowboy;
     ObjectLoader objLoad;
-    std::vector<GLuint> textures;
+    MaterialLoader materialLoader;
     ObjectMenager obj;
     Observer *observer = new Observer();
-    Shader *shader;
+    Shader shader;
+    Shader shaderTextured;
+
+    std::shared_ptr<Material> testMat;
 
 public:
     Menager(GLFWwindow* _window);

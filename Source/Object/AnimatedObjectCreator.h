@@ -18,6 +18,7 @@ private:
 public:
     AnimatedObjectCreator& AddKeyframe(const std::vector<std::shared_ptr<Mesh>>& meshes){
         keyframes.emplace_back(0.0, meshes);
+        return *this;
     }
 
     std::shared_ptr<AnimatedObject> make(float animationTime) {
