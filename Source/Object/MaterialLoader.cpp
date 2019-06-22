@@ -15,7 +15,7 @@ std::shared_ptr<Material> MaterialLoader::load(const std::string &Path) {
     std::fstream howToLoad;
     howToLoad.open(Path.c_str(), std::ios::in);
     if (howToLoad.fail()) {
-        std::cerr << "Problem \n";
+        std::cerr << "Could not open howToLoad material file \n";
         exit(EXIT_FAILURE);
     }
     std::string directory=getFileDir(Path);
@@ -30,23 +30,25 @@ std::shared_ptr<Material> MaterialLoader::load(const std::string &Path) {
     while (!howToLoad.eof()){
         howToLoad>>textureName;
         texturePath = directory + "/" + textureName;
-        matType = static_cast<Material::MaterialType>( static_cast<int>(matType) + 1 );
         if(matType == Material::MaterialType::NUM_MATS) break;
         int width, height, channels;
         unsigned char* image = stbi_load(texturePath.c_str(), &width, &height, &channels, STBI_rgb_alpha );
+
         glBindTexture(GL_TEXTURE_2D, tex[(int)matType]);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_COMPRESSED_RGBA8_ETC2_EAC, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image);
 
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
 
+        assert(glIsTexture(tex[(int)matType]));
+
         mat->loadTexture(tex[(int)matType], matType);
+
+        matType = static_cast<Material::MaterialType>( static_cast<int>(matType) + 1 );
 
         stbi_image_free(image);
     }
-
-
-    return std::shared_ptr<Material>();
+    return mat;
 }

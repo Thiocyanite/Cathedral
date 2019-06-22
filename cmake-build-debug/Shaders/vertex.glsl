@@ -20,11 +20,11 @@ void main(void){
 //    vec3 Pos  = mix(pos, pos2,interpolationFactor);
 //    vec3 Norm = normalize( mix(normal, norm2, interpolationFactor) );
 
-    vec3 Pos = pos2;
-    vec3 Norm = norm2;
+    vec3 Pos = pos;
+    vec3 Norm = normal;
 
     iTexCoord = texCoord;
     iColor = col;
-    iNormal = (M * vec4(Norm, 1)).rgb;
+    iNormal = (M * vec4(Norm, 0)).rgb;
     gl_Position = MVP * vec4(Pos, 1);
 }

@@ -6,7 +6,7 @@ in vec3 iNormal;
 
 layout(location = 0) out vec4 out_Color;
 
-uniform sampler2D  colorMap;
+uniform sampler2D colorMap;
 
 void main() {
     vec3 lightDir = normalize(vec3(1, -1, 0));

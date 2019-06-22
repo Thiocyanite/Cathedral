@@ -32,11 +32,11 @@ void Menager::DrawScene() {
     glm::mat4 P = glm::perspective(glm::radians(70.f), aspectRatio, 0.1f, 100.f);
     glm::mat4 MVP = P * V * M;
 
-    //shaderTextured.use();
-    //testMat->bind();
-    //glUniform1i(shaderTextured.getU("colorMap"), 1);
+    shaderTextured.use();
+    glUniform1i(shaderTextured.getU("colorMap"), 0);
+    testMat->bind();
 
-    shader.use();
+    //shader.use();
     for (int meshID=0; meshID<obj.size(); meshID++) {
         for (auto &mesh : obj.getModel(meshID)->getMeshes()) {
             mesh->bindVAO();
@@ -56,13 +56,13 @@ void Menager::DrawScene() {
         M = glm::mat4(1);
         M = glm::translate(M, observer->position);
         MVP = P * V * M;
-        glUniformMatrix4fv(shader.getU("M"), 1, GL_FALSE, glm::value_ptr(M) );
-        glUniformMatrix4fv(shader.getU("MVP"), 1, GL_FALSE, glm::value_ptr(MVP) );
+        glCall( glUniformMatrix4fv(shader.getU("M"), 1, GL_FALSE, glm::value_ptr(M)) );
+        glCall( glUniformMatrix4fv(shader.getU("MVP"), 1, GL_FALSE, glm::value_ptr(MVP)) );
 
-        glDrawElements(GL_TRIANGLES, mesh->indicies.size(), GL_UNSIGNED_INT, nullptr);
+        glCall( glDrawElements(GL_TRIANGLES, mesh->indicies.size(), GL_UNSIGNED_INT, nullptr) );
     }
-    //shaderTextured.unuse();
-    shader.unuse();
+    shaderTextured.unuse();
+    //shader.unuse();
     glfwSwapBuffers(window);
 }
 

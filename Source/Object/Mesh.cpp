@@ -42,6 +42,8 @@ void Mesh::initVAO() {
 }
 
 void Mesh::reloadVAO() {
+    glBindVertexArray(vertexArrayObject);
+
     glBindBuffer(GL_ARRAY_BUFFER, bufferObjects[0]);
     glBufferSubData(GL_ARRAY_BUFFER, 0, getVecSizeInBytes(pos), pos.data());
 
@@ -56,6 +58,8 @@ void Mesh::reloadVAO() {
 
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, bufferObjects[4]);
     glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, 0, getVecSizeInBytes(indicies), indicies.data());
+
+    glBindVertexArray(0);
 }
 
 void Mesh::bindVAO() {
