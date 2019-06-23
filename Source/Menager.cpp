@@ -26,43 +26,42 @@ void Menager::DrawScene() {
 
     glm::mat4 M = glm::mat4(1);
               M = glm::translate(M, glm::vec3(-2.f,-4.0f,-10.f) );
-              //M = glm::rotate(M, time, glm::vec3(0,1,0));
-              M = glm::scale(M, glm::vec3(0.5f));
     glm::mat4 V = observer->calculateLookAtMatrix();
     glm::mat4 P = glm::perspective(glm::radians(70.f), aspectRatio, 0.1f, 100.f);
     glm::mat4 MVP = P * V * M;
 
-    shaderTextured.use();
-    glUniform1i(shaderTextured.getU("colorMap"), 0);
-    testMat->bind();
+    //shaderTextured.use();
+    //glUniform1i(shaderTextured.getU("colorMap"), 0);
+    //testMat->bind();
 
-    //shader.use();
+    shader.use();
     for (int meshID=0; meshID<obj.size(); meshID++) {
         for (auto &mesh : obj.getModel(meshID)->getMeshes()) {
             mesh->bindVAO();
             M = glm::mat4(1);
+
             M = glm::translate(M, obj.getPosition(meshID));
+            M = glm::scale(M,obj.getScale(meshID)); //now objects can be scaled
             MVP = P * V * M;
-            glCall( glUniformMatrix4fv(shader.getU("M"), 1, GL_FALSE, glm::value_ptr(M)) );
-            glCall( glUniformMatrix4fv(shader.getU("MVP"), 1, GL_FALSE, glm::value_ptr(MVP)) );
+            glUniformMatrix4fv(shader.getU("M"), 1, GL_FALSE, glm::value_ptr(M)) ;
+             glUniformMatrix4fv(shader.getU("MVP"), 1, GL_FALSE, glm::value_ptr(MVP)) ;
 
             glCall( glDrawElements(GL_TRIANGLES, mesh->indicies.size(), GL_UNSIGNED_INT, nullptr) );
         }
     }
-    int x;
     for (auto& mesh : observer->character->getMeshes()){
         mesh->bindVAO();
 
         M = glm::mat4(1);
         M = glm::translate(M, observer->position);
         MVP = P * V * M;
-        glCall( glUniformMatrix4fv(shader.getU("M"), 1, GL_FALSE, glm::value_ptr(M)) );
-        glCall( glUniformMatrix4fv(shader.getU("MVP"), 1, GL_FALSE, glm::value_ptr(MVP)) );
+        glUniformMatrix4fv(shader.getU("M"), 1, GL_FALSE, glm::value_ptr(M)) ;
+         glUniformMatrix4fv(shader.getU("MVP"), 1, GL_FALSE, glm::value_ptr(MVP)) ;
 
-        glCall( glDrawElements(GL_TRIANGLES, mesh->indicies.size(), GL_UNSIGNED_INT, nullptr) );
+        glDrawElements(GL_TRIANGLES, mesh->indicies.size(), GL_UNSIGNED_INT, nullptr) ;
     }
-    shaderTextured.unuse();
-    //shader.unuse();
+    //shaderTextured.unuse();
+    shader.unuse();
     glfwSwapBuffers(window);
 }
 
@@ -119,7 +118,7 @@ void Menager::loadObjects() {
 
                     for (int i = 0; i < 3; i++)
                         parameters >> par[i];
-                    loadingScale = glm::vec3(atof(par[0].c_str()), atof(par[1].c_str()), atof(par[3].c_str()));
+                    loadingScale = glm::vec3(atof(par[0].c_str())/10, atof(par[1].c_str())/10, atof(par[3].c_str())/10);
                     obj.addObject(loadingOne, loadingPos, loadingRot, loadingScale);
 
                 }
