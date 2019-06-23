@@ -28,12 +28,11 @@ glm::mat4 Observer::calculateLookAtMatrix() {
 }
 
 void Observer::moveForward(float speed) {
-    position += cameraFront * speed;
-
+    position += direction * speed;
 }
 
 void Observer::moveAside(float speed) {
-    position + glm::normalize(glm::cross(cameraFront, upVector)) * speed;
+    position += glm::normalize(glm::cross(direction, upVector)) * speed;
 }
 
 void Observer::lookAround(float xRotate, float yRotate) {

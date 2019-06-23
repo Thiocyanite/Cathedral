@@ -25,21 +25,21 @@ void Menager::DrawScene() {
 
 void Menager::key(){
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        observer->moveForward(0.1);
+        observer->moveForward(0.1f);
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
-        observer->moveForward(-0.1);
+        observer->moveForward(-0.1f);
     if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
-        observer->moveAside(-0.05);
+        observer->moveAside(-0.05f);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
-        observer->moveAside(0.05);
+        observer->moveAside(0.05f);
     if (glfwGetKey(window, GLFW_KEY_U) == GLFW_PRESS)
-        observer->lookAround(0.1, 0.0);
+        observer->lookAround(0.1f, 0.0f);
     if (glfwGetKey(window, GLFW_KEY_H) == GLFW_PRESS)
-        observer->lookAround(-0.1, 0.0);
+        observer->lookAround(-0.1f, 0.0f);
     if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS)
-        observer->lookAround(0.0, 0.1);
+        observer->lookAround(0.0f, 0.1f);
     if (glfwGetKey(window, GLFW_KEY_K) == GLFW_PRESS)
-        observer->lookAround(0.0, -0.1);
+        observer->lookAround(0.0f, -0.1f);
 }
 
 
@@ -131,6 +131,7 @@ Menager::Menager() {
     audi = new Audio();
     audi->playEpica();
 
+    observer = new Observer();
 }
 
 

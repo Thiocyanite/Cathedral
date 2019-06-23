@@ -12,6 +12,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <memory>
+#include <iostream>
 
 class Object;
 class Menager;
