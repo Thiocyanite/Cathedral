@@ -22,7 +22,10 @@ void main(void){
 //    vec3 Pos = pos2;
 //    vec3 Norm = norm2;
 
-    iColor = col;
+
+    iColor = col*vec3(2,1,0);
+
+
     iNormal = (M * vec4(Norm, 1)).rgb;
     gl_Position = MVP * vec4(Pos, 1);
 }
