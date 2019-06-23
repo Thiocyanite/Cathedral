@@ -33,13 +33,26 @@ void Menager::DrawScene() {
     //shaderTextured.use();
     //glUniform1i(shaderTextured.getU("colorMap"), 0);
     //testMat->bind();
-
+    float angle;
     shader.use();
     for (int meshID=0; meshID<obj.size(); meshID++) {
         for (auto &mesh : obj.getModel(meshID)->getMeshes()) {
             mesh->bindVAO();
             M = glm::mat4(1);
             M = glm::translate(M, obj.getPosition(meshID));
+            glm::vec3 helper=obj.getRotation(meshID);
+            if (helper.x!=0){
+                angle=helper.x;
+                M=glm::rotate(M, angle, obj.getRotation(meshID));
+            }
+            if (helper.y!=0){
+                angle=helper.y;
+                M=glm::rotate(M, angle, obj.getRotation(meshID));
+            }
+            if (helper.z!=0){
+                angle=helper.z;
+                M=glm::rotate(M, angle, obj.getRotation(meshID));
+            }
             M = glm::scale(M,obj.getScale(meshID)); //now objects can be scaled
             MVP = P * V * M;
             glUniformMatrix4fv(shader.getU("M"), 1, GL_FALSE, glm::value_ptr(M)) ;
@@ -50,9 +63,24 @@ void Menager::DrawScene() {
     }
     for (auto& mesh : observer->character->getMeshes()){
         mesh->bindVAO();
-        // switch (observer.Orientation) {} //Rotacja postaci zależna od kąta padania
         M = glm::mat4(1);
         M = glm::translate(M, observer->position);
+         switch (observer->Orientation) {
+             case 'F':
+                 break;
+             case 'B':
+                 M=glm::rotate(M, 60.0f, glm::vec3(0,1,0));
+                 break;
+             case 'L':
+                 M=glm::rotate(M,90.0f, glm::vec3(0,1,0));
+                 break;
+             case 'R':
+                 M=glm::rotate(M,30.0f, glm::vec3(0,1,0));
+                 break;
+
+         } //Rotacja postaci zależna od kąta padania
+
+
 
                 MVP = P * V * M;
         glUniformMatrix4fv(shader.getU("M"), 1, GL_FALSE, glm::value_ptr(M)) ;
@@ -160,7 +188,7 @@ Menager::Menager(GLFWwindow* _window) {
     shaderTextured.loadProgram("Shaders/vertex.glsl", "","Shaders/fragmentTextured.glsl");
 
     audi = new Audio();
-    audi->playEpica();
+    //audi->playEpica();
     testMat= std::make_shared<Material>();
 
 }

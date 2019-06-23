@@ -11,10 +11,10 @@ void Material::loadTexture(GLuint Tex, Material::MaterialType Mat) {
 
 void Material::bind() {
     assert(glIsTexture(Textures[(int)MaterialType::COLOR]));
-    assert(glIsTexture(Textures[(int)MaterialType::NORMAL]));
+
 
     glActiveTexture(GL_TEXTURE0); // activate the texture unit first before binding texture
     glBindTexture(GL_TEXTURE_2D, Textures[(int)MaterialType::COLOR]);
-    glActiveTexture(GL_TEXTURE1); // activate the texture unit first before binding texture
-    glBindTexture(GL_TEXTURE_2D, Textures[(int)MaterialType::NORMAL]);
+
+
 }

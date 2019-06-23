@@ -13,7 +13,7 @@
 class Material {
 
 public:
-enum class MaterialType {COLOR, NORMAL, NUM_MATS};
+enum class MaterialType {COLOR, NUM_MATS};
 
 
 void loadTexture(GLuint Tex, MaterialType Mat);
