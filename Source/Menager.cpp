@@ -30,10 +30,39 @@ void Menager::DrawScene() {
     glm::mat4 P = glm::perspective(glm::radians(70.f), aspectRatio, 0.1f, 100.f);
     glm::mat4 MVP = P * V * M;
 
-    //shaderTextured.use();
-    //glUniform1i(shaderTextured.getU("colorMap"), 0);
-    //testMat->bind();
+    shaderTextured.use();
+    glUniform1i(shaderTextured.getU("colorMap"), 0);
+    testMat->bind();
     float angle;
+
+    for (int meshID=0; meshID<texObj.size(); meshID++) {
+        for (auto &mesh : texObj.getModel(meshID)->getMeshes()) {
+            mesh->bindVAO();
+            M = glm::mat4(1);
+            M = glm::translate(M, texObj.getPosition(meshID));
+            glm::vec3 helper=texObj.getRotation(meshID);
+            if (helper.x!=0){
+                angle=helper.x;
+                M=glm::rotate(M, angle, texObj.getRotation(meshID));
+            }
+            if (helper.y!=0){
+                angle=helper.y;
+                M=glm::rotate(M, angle, texObj.getRotation(meshID));
+            }
+            if (helper.z!=0){
+                angle=helper.z;
+                M=glm::rotate(M, angle, texObj.getRotation(meshID));
+            }
+            M = glm::scale(M, texObj.getScale(meshID)); //now objects can be scaled
+            MVP = P * V * M;
+            glUniformMatrix4fv(shaderTextured.getU("M"), 1, GL_FALSE, glm::value_ptr(M)) ;
+            glUniformMatrix4fv(shaderTextured.getU("MVP"), 1, GL_FALSE, glm::value_ptr(MVP)) ;
+
+            glCall( glDrawElements(GL_TRIANGLES, mesh->indicies.size(), GL_UNSIGNED_INT, nullptr) );
+        }
+    }
+
+    shaderTextured.unuse();
     shader.use();
     for (int meshID=0; meshID<obj.size(); meshID++) {
         for (auto &mesh : obj.getModel(meshID)->getMeshes()) {
@@ -126,9 +155,11 @@ void Menager::loadObjects() {
     std::shared_ptr<Model> loadingOne;
     glm::vec3 loadingPos, loadingRot, loadingScale;
     std::string pathToObject, par[3];
+    char Mode;
     int numberOfItems;
     while (!objects.eof()){
         objects>>pathToObject;
+        objects>>Mode;
         if(!pathToObject.empty()){
             try{
 
@@ -147,7 +178,10 @@ void Menager::loadObjects() {
                     for (int i = 0; i < 3; i++)
                         parameters >> par[i];
                     loadingScale = glm::vec3(atof(par[0].c_str())/10, atof(par[1].c_str())/10, atof(par[3].c_str())/10);
-                    obj.addObject(loadingOne, loadingPos, loadingRot, loadingScale);
+                    if (Mode=='N') //Non-textured
+                        obj.addObject(loadingOne, loadingPos, loadingRot, loadingScale);
+                    else
+                        texObj.addObject(loadingOne,loadingPos,loadingRot,loadingScale);
 
                 }
             }

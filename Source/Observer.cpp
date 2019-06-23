@@ -42,8 +42,6 @@ void Observer::moveForward(float speed)
         Orientation='F';
     else
         Orientation='B';
-    std::cout<<Orientation<<std::endl;
-
 
 }
 

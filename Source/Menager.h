@@ -40,7 +40,7 @@ private:
     //std::shared_ptr<AnimatedObject> cowboy;
     ObjectLoader objLoad;
     MaterialLoader materialLoader;
-    ObjectMenager obj;
+    ObjectMenager obj, texObj;
     Observer *observer = new Observer();
     Shader shader;
     Shader shaderTextured;
