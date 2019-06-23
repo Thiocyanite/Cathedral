@@ -16,11 +16,11 @@ Observer::Observer()
     direction = glm::vec3(0.0f,0.0f, 3.0f);
     upVector = glm::vec3(0.0f, 1.0f, 0.0f);
     rightVector = glm::normalize(glm::cross(direction, upVector));
+    Orientation='F';
 }
 
 Observer::~Observer()
 {
-    //dtor
 }
 
 glm::mat4 Observer::calculateLookAtMatrix()
@@ -38,6 +38,12 @@ void Observer::moveForward(float speed)
         std::cout<<"I can't go farther\n";
     else
         position += direction * speed;
+    if (speed>0)
+        Orientation='F';
+    else
+        Orientation='B';
+    std::cout<<Orientation<<std::endl;
+
 
 }
 
@@ -47,4 +53,9 @@ void Observer::moveAside(float speed)
         std::cout<<"I can't go farther\n";
     else
     position += rightVector * speed;
+    if (speed>0)
+        Orientation='R';
+    else
+        Orientation='L';
+
 }

@@ -39,7 +39,6 @@ void Menager::DrawScene() {
         for (auto &mesh : obj.getModel(meshID)->getMeshes()) {
             mesh->bindVAO();
             M = glm::mat4(1);
-
             M = glm::translate(M, obj.getPosition(meshID));
             M = glm::scale(M,obj.getScale(meshID)); //now objects can be scaled
             MVP = P * V * M;
@@ -51,10 +50,11 @@ void Menager::DrawScene() {
     }
     for (auto& mesh : observer->character->getMeshes()){
         mesh->bindVAO();
-
+        // switch (observer.Orientation) {} //Rotacja postaci zależna od kąta padania
         M = glm::mat4(1);
         M = glm::translate(M, observer->position);
-        MVP = P * V * M;
+
+                MVP = P * V * M;
         glUniformMatrix4fv(shader.getU("M"), 1, GL_FALSE, glm::value_ptr(M)) ;
          glUniformMatrix4fv(shader.getU("MVP"), 1, GL_FALSE, glm::value_ptr(MVP)) ;
 

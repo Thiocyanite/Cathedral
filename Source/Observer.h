@@ -28,6 +28,7 @@ private:
     glm::vec3 upVector;
     glm::vec3 thirdPersonOffset;
     std::shared_ptr<Model> character;
+    char Orientation; //shows in which direction observer should look
 
 public:
     friend  class Menager;
