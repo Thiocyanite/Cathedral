@@ -111,6 +111,13 @@ void Menager::key(){
         observer->moveAside(-0.05);
     if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
         observer->moveAside(0.05);
+    if (glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS)
+        playEpica();
+    if (glfwGetKey(window, GLFW_KEY_F) == GLFW_PRESS)
+        playAfter();
+    if (glfwGetKey(window, GLFW_KEY_P) == GLFW_PRESS)
+        std::cout<<observer->position.x<<" "<<observer->position.y<<" "<<observer->position.z<<"\n";
+
 }
 
 
@@ -147,7 +154,7 @@ void Menager::loadObjects() {
                 {
                     for (int i = 0; i < 3; i++)
                         parameters >> par[i];
-                    loadingPos = glm::vec3(atof(par[0].c_str()), atof(par[1].c_str()), atof(par[3].c_str()));
+                    loadingPos = glm::vec3(atof(par[0].c_str())/10, atof(par[1].c_str())/10, atof(par[3].c_str())/10);
 
                     for (int i = 0; i < 3; i++)
                         parameters >> par[i];
@@ -200,7 +207,7 @@ Menager::Menager(GLFWwindow* _window) {
     shaderTextured.loadProgram("Shaders/vertex.glsl", "","Shaders/fragmentTextured.glsl");
 
     audi = new Audio();
-    //audi->playEpica();
+    audi->playAfter();
     testMat= std::make_shared<Material>();
 
 }
