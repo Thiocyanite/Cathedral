@@ -18,10 +18,10 @@ class Menager;
 
 class Observer {
 private:
-    float maxX=20;
-    float minX=-20;
-    float minZ=-30;
-    float maxZ=30;
+    float maxX=17;
+    float minX=-13;
+    float minZ=-33;
+    float maxZ=9;
     glm::vec3 position;
     glm::vec3 direction;
     glm::vec3 rightVector;

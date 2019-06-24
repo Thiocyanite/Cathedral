@@ -1,4 +1,8 @@
+Models/Cathedral/cathedral.obj T
+Models/Cathedral/Collumn.obj T
+Models/cross.obj N
+Models/Stone_Display.obj N
+Models/Spider.obj N
 Models/pew/sfa012.obj T
-Models/Candelabra.obj N
-Models/Spiders.obj N
-Models/cross.obj
+Models/Roses_obj/Rose.obj T
+Models/Dark_durum_bread_obj/Bread.obj T

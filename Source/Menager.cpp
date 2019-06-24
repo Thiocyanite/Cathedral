@@ -27,33 +27,23 @@ void Menager::DrawScene() {
     glm::mat4 M = glm::mat4(1);
               M = glm::translate(M, glm::vec3(-2.f,-4.0f,-10.f) );
     glm::mat4 V = observer->calculateLookAtMatrix();
-    glm::mat4 P = glm::perspective(glm::radians(70.f), aspectRatio, 0.1f, 100.f);
+    glm::mat4 P = glm::perspective(glm::radians(70.f), aspectRatio, 0.1f, 500.f);
     glm::mat4 MVP = P * V * M;
 
     shaderTextured.use();
     glUniform1i(shaderTextured.getU("colorMap"), 0);
     testMat->bind();
-    float angle;
+    float angle=10;
 
     for (int meshID=0; meshID<texObj.size(); meshID++) {
         for (auto &mesh : texObj.getModel(meshID)->getMeshes()) {
             mesh->bindVAO();
             M = glm::mat4(1);
+
+
+            //M=glm::rotate(M, angle, texObj.getRotation(meshID));
+            //M = glm::scale(M, texObj.getScale(meshID)); //now objects can be scaled
             M = glm::translate(M, texObj.getPosition(meshID));
-            glm::vec3 helper=texObj.getRotation(meshID);
-            if (helper.x!=0){
-                angle=helper.x;
-                M=glm::rotate(M, angle, texObj.getRotation(meshID));
-            }
-            if (helper.y!=0){
-                angle=helper.y;
-                M=glm::rotate(M, angle, texObj.getRotation(meshID));
-            }
-            if (helper.z!=0){
-                angle=helper.z;
-                M=glm::rotate(M, angle, texObj.getRotation(meshID));
-            }
-            M = glm::scale(M, texObj.getScale(meshID)); //now objects can be scaled
             MVP = P * V * M;
             glUniformMatrix4fv(shaderTextured.getU("M"), 1, GL_FALSE, glm::value_ptr(M)) ;
             glUniformMatrix4fv(shaderTextured.getU("MVP"), 1, GL_FALSE, glm::value_ptr(MVP)) ;
@@ -68,21 +58,9 @@ void Menager::DrawScene() {
         for (auto &mesh : obj.getModel(meshID)->getMeshes()) {
             mesh->bindVAO();
             M = glm::mat4(1);
-            M = glm::translate(M, obj.getPosition(meshID));
-            glm::vec3 helper=obj.getRotation(meshID);
-            if (helper.x!=0){
-                angle=helper.x;
-                M=glm::rotate(M, angle, obj.getRotation(meshID));
-            }
-            if (helper.y!=0){
-                angle=helper.y;
-                M=glm::rotate(M, angle, obj.getRotation(meshID));
-            }
-            if (helper.z!=0){
-                angle=helper.z;
-                M=glm::rotate(M, angle, obj.getRotation(meshID));
-            }
-            M = glm::scale(M,obj.getScale(meshID)); //now objects can be scaled
+            //M=glm::rotate(M, angle, texObj.getRotation(meshID));
+            //M = glm::scale(M, texObj.getScale(meshID)); //now objects can be scaled
+            M = glm::translate(M, texObj.getPosition(meshID));
             MVP = P * V * M;
             glUniformMatrix4fv(shader.getU("M"), 1, GL_FALSE, glm::value_ptr(M)) ;
              glUniformMatrix4fv(shader.getU("MVP"), 1, GL_FALSE, glm::value_ptr(MVP)) ;
